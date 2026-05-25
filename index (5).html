@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Keuangan HUT GKPS Binjai 63</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#1a2e5a;--navy2:#243872;--gold:#c9a227;--goldf:#f0c94a;--green:#1a7a4a;--gl:#e8f7ef;
+--red:#c0392b;--rl:#fdecea;--bl:#eaf1fb;--bg:#f4f6fb;--card:#fff;--text:#1a2035;
+--muted:#7a8299;--bdr:#e2e8f4;--r:16px;--sh:0 4px 24px rgba(26,46,90,.10);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Plus Jakarta Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+html,body{overflow-x:hidden;}
+.hdr{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:16px 18px 18px;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(26,46,90,.18);}
+.hdr h1{font-family:"Playfair Display",serif;font-size:16px;color:#fff;line-height:1.3;}
+.hdr p{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;}
+.hdr-row{display:flex;align-items:center;justify-content:space-between;}
+.hdrbadge{background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;}
+.nav{display:flex;background:var(--navy2);padding:0 6px;gap:1px;overflow-x:auto;scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.nb{flex:none;padding:9px 10px;font-size:11px;font-weight:600;color:rgba(255,255,255,.5);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit;transition:all .2s;}
+.nb.active{color:var(--goldf);border-bottom-color:var(--gold);}
+.main{padding:13px;max-width:480px;margin:0 auto;}
+.sec{display:none;}.sec.active{display:block;}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:15px;margin-bottom:11px;}
+.ctitle{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:11px;display:flex;align-items:center;gap:8px;}
+.cicon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:11px;}
+.sb{background:var(--card);border-radius:13px;padding:11px;box-shadow:var(--sh);}
+.sb .lbl{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.sb .val{font-size:14px;font-weight:800;margin-top:3px;line-height:1.2;}
+.sb .sub{font-size:10px;color:var(--muted);margin-top:2px;}
+.sb.gn{background:var(--gl);}.sb.gn .val{color:var(--green);}
+.sb.rd{background:var(--rl);}.sb.rd .val{color:var(--red);}
+.sb.gd{background:#fff8e1;}.sb.gd .val{color:#b8860b;}
+.sb.bl{background:var(--bl);}.sb.bl .val{color:var(--navy);}
+.saldo-card{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r);padding:17px;margin-bottom:11px;color:white;}
+.saldo-card .sl{font-size:11px;opacity:.7;font-weight:600;text-transform:uppercase;}
+.saldo-card .sv{font-size:25px;font-weight:800;margin:5px 0 2px;}
+.saldo-card .ss{font-size:12px;color:var(--goldf);font-weight:600;}
+.fg{margin-bottom:11px;}
+.fl{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:5px;display:block;}
+.fi,.fs,.ft{width:100%;padding:10px 12px;border:1.5px solid var(--bdr);border-radius:10px;font-size:13px;font-family:inherit;color:var(--text);background:#fff;outline:none;transition:border .2s;-webkit-appearance:none;}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--navy);}
+.ft{resize:vertical;min-height:60px;}
+.ua{border:2px dashed var(--bdr);border-radius:11px;padding:16px;text-align:center;cursor:pointer;background:var(--bg);transition:all .2s;}
+.ua:hover{border-color:var(--navy);background:var(--bl);}
+.ua .ui{font-size:24px;margin-bottom:4px;}
+.ua p{font-size:11px;color:var(--muted);}
+.ua strong{font-size:12px;color:var(--navy);display:block;margin-bottom:3px;}
+.uprev{width:100%;border-radius:9px;margin-top:7px;max-height:170px;object-fit:cover;display:none;}
+.btn{width:100%;padding:12px;border:none;border-radius:11px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-p{background:var(--navy);color:white;}.btn-s{background:var(--green);color:white;}
+.btn-g{background:var(--gold);color:var(--navy);}.btn-d{background:var(--red);color:white;}
+.btn-o{background:none;border:1.5px solid var(--navy);color:var(--navy);}
+.btn-sm{width:auto;padding:5px 11px;font-size:11px;border-radius:7px;}.btn:active{transform:scale(.98);}
+.mt{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid var(--bdr);border-radius:10px;overflow:hidden;}
+.mb{padding:9px;text-align:center;font-size:12px;font-weight:600;font-family:inherit;background:#fff;border:none;cursor:pointer;color:var(--muted);transition:all .18s;}
+.mb.at{background:var(--green);color:#fff;}.mb.an{background:var(--navy);color:#fff;}.mb.ab{background:#856404;color:#fff;}
+.ntf{display:none;margin-top:10px;}.ntf.show{display:block;}
+.ti{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-bottom:1px solid var(--bdr);}
+.ti:last-child{border-bottom:none;}
+.tico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.tinf{flex:1;min-width:0;}
+.tinf .tn{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tinf .tm{font-size:10px;color:var(--muted);margin-top:2px;display:flex;flex-wrap:wrap;gap:3px;align-items:center;}
+.tamt{font-size:13px;font-weight:700;text-align:right;flex-shrink:0;}
+.tamt.in{color:var(--green);}.tamt.out{color:var(--red);}
+.tact{display:flex;flex-direction:column;gap:3px;flex-shrink:0;}
+.tact button{background:none;border:none;cursor:pointer;font-size:13px;padding:2px;opacity:.55;line-height:1;}
+.tact button:hover{opacity:1;}
+.badge-sm{display:inline-block;padding:2px 6px;border-radius:20px;font-size:9px;font-weight:700;}
+.bg-tunai{background:var(--gl);color:var(--green);}.bg-nontunai{background:var(--bl);color:var(--navy);}
+.bg-bon{background:#fff3cd;color:#856404;}.bg-lunas{background:var(--gl);color:var(--green);}
+.pb-wrap{margin-bottom:11px;}
+.pb-lbl{display:flex;justify-content:space-between;margin-bottom:3px;font-size:11px;}
+.pb-bar{height:7px;background:var(--bdr);border-radius:99px;overflow:hidden;}
+.pb-fill{height:100%;border-radius:99px;transition:width .5s ease;}
+.pb-fill.gn{background:var(--green);}.pb-fill.gd{background:var(--gold);}.pb-fill.rd{background:var(--red);}
+.ji-tbl{width:100%;border-collapse:collapse;font-size:11px;}
+.ji-tbl th{background:var(--navy);color:white;padding:6px 5px;text-align:left;font-size:10px;}
+.ji-tbl td{padding:6px 5px;border-bottom:1px solid var(--bdr);vertical-align:middle;}
+.ji-tbl tr:nth-child(even) td{background:#f8faff;}
+.ji-tbl tr:last-child td{border-bottom:none;}
+/* SEKSI */
+.seksi-card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:11px;overflow:hidden;}
+.seksi-hdr{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+.seksi-hdr h3{font-size:13px;font-weight:700;color:var(--navy);}
+.seksi-hdr .seksi-total{font-size:12px;font-weight:700;color:var(--red);}
+.seksi-body{display:none;padding:0 14px 12px;border-top:1px solid var(--bdr);}
+.seksi-body.open{display:block;}
+.kegiatan-item{padding:9px 0;border-bottom:1px solid var(--bdr);}
+.kegiatan-item:last-child{border-bottom:none;}
+.kegiatan-hdr{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.kegiatan-nama{font-size:12px;font-weight:600;color:var(--text);}
+.kegiatan-meta{font-size:10px;color:var(--muted);margin-top:2px;}
+.doc-thumb{width:42px;height:42px;border-radius:7px;object-fit:cover;border:1.5px solid var(--bdr);cursor:pointer;}
+/* MODALS */
+.modal-wrap{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end;justify-content:center;}
+.modal-wrap.open{display:flex;}
+.modal-box{background:white;border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;}
+.modal-box h3{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
+.modal-close-btn{background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);}
+.moverlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:300;display:none;align-items:center;justify-content:center;}
+.moverlay.open{display:flex;}
+.mimg{max-width:95vw;max-height:90vh;border-radius:11px;object-fit:contain;}
+.mclose{position:absolute;top:13px;right:13px;background:white;border:none;border-radius:50%;width:33px;height:33px;font-size:16px;cursor:pointer;}
+.confirm-wrap{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:250;display:none;align-items:center;justify-content:center;padding:20px;}
+.confirm-wrap.open{display:flex;}
+.confirm-box{background:white;border-radius:var(--r);padding:22px;max-width:320px;width:100%;box-shadow:var(--sh);}
+.confirm-box h3{font-size:14px;color:var(--navy);margin-bottom:7px;}
+.confirm-box p{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+.confirm-btns{display:flex;gap:9px;}.confirm-btns button{flex:1;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:white;padding:10px 17px;border-radius:11px;font-size:12px;font-weight:600;box-shadow:var(--sh);z-index:999;transition:transform .3s;white-space:nowrap;max-width:92%;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.s{background:var(--green);}.toast.e{background:var(--red);}
+.chart-wrap{position:relative;height:210px;margin:7px 0;}
+.slbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.empty{text-align:center;padding:26px 0;color:var(--muted);}
+.empty .ei{font-size:36px;margin-bottom:8px;}.empty p{font-size:12px;}
+.row-btns{display:flex;gap:7px;margin-top:9px;}
+.divider{height:1px;background:var(--bdr);margin:10px 0;}
+.cicil-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--bdr);font-size:12px;}
+.cicil-row:last-child{border-bottom:none;}
+/* RAB TABLE */
+.rab-row{display:flex;flex-direction:column;padding:10px 0;border-bottom:1px solid var(--bdr);gap:6px;}
+.rab-row:last-child{border-bottom:none;}
+.rab-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.rab-nama{font-size:12px;font-weight:600;color:var(--text);flex:1;}
+.rab-status{font-size:18px;flex-shrink:0;}
+.rab-nums{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.rab-num{font-size:11px;border-radius:7px;padding:5px 8px;}
+.rab-num .nlbl{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;margin-bottom:2px;}
+.rab-num .nval{font-weight:700;}
+.rab-alasan{margin-top:5px;}
+.rab-alasan textarea{width:100%;padding:7px 9px;border:1.5px solid var(--bdr);border-radius:8px;font-size:11px;font-family:inherit;resize:none;outline:none;min-height:44px;}
+.rab-alasan textarea:focus{border-color:var(--gold);}
+/* PRINT MODAL */
+.print-modal-box{background:white;border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;}
+/* PRINT STYLES */
+@media print{
+  .hdr,.nav,.no-print{display:none!important;}
+  .main{padding:0;max-width:100%;}
+  body{background:white;}
+  .print-section{display:block!important;}
+}
+
+
+/* FULL TIMER */
+.ft-card{background:linear-gradient(135deg,#1a2e5a,#243872);border-radius:var(--r);padding:16px;margin-bottom:11px;color:white;}
+.ft-card h3{font-size:14px;font-weight:700;margin-bottom:4px;}
+.ft-card p{font-size:11px;opacity:.7;margin-bottom:14px;}
+.ft-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ft-item{background:rgba(255,255,255,.1);border-radius:11px;padding:11px;transition:all .2s;}
+.ft-item:hover{background:rgba(255,255,255,.18);}
+.ft-item .ft-icon{font-size:22px;margin-bottom:5px;}
+.ft-item .ft-nama{font-size:12px;font-weight:700;color:white;margin-bottom:2px;}
+.ft-item .ft-rab{font-size:10px;opacity:.65;margin-bottom:6px;}
+.ft-item .ft-real{font-size:13px;font-weight:800;color:#4ade80;}
+.ft-item .ft-real.belum{color:rgba(255,255,255,.4);}
+.ft-item .ft-status{font-size:9px;padding:2px 7px;border-radius:10px;display:inline-block;margin-top:3px;}
+.ft-item .ft-status.done{background:rgba(74,222,128,.2);color:#4ade80;}
+.ft-item .ft-status.partial{background:rgba(251,191,36,.2);color:#fbbf24;}
+.ft-item .ft-status.none{background:rgba(255,255,255,.1);color:rgba(255,255,255,.5);}
+.ft-btn{width:100%;margin-top:7px;padding:8px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);color:white;border-radius:9px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .2s;}
+.ft-btn:hover{background:rgba(255,255,255,.25);}
+/* MODAL FULL TIMER */
+.ft-modal-item{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--bdr);}
+.ft-modal-item:last-child{border-bottom:none;}
+.ft-modal-nama{font-size:13px;font-weight:700;color:var(--navy);}
+.ft-modal-rab{font-size:11px;color:var(--muted);margin-top:2px;}
+.ft-modal-real{font-size:14px;font-weight:800;color:var(--green);}
+.ft-modal-real.belum{color:var(--muted);}
+
+/* ═══ RESPONSIVE — Tablet & Desktop ═══ */
+@media (min-width:600px){
+  .main{max-width:640px;padding:20px;}
+  .sg{grid-template-columns:repeat(4,1fr);}
+  .hdr h1{font-size:18px;}
+  .nb{padding:10px 14px;font-size:12px;}
+  .card{padding:20px;}
+  .saldo-card .sv{font-size:30px;}
+  .modal-box,.print-modal-box{max-height:80vh;}
+  .chart-wrap{height:260px;}
+}
+@media (min-width:900px){
+  .main{max-width:900px;}
+  .sec.active{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;}
+  .sec.active .card:first-child{grid-column:1 / -1;}
+  #sec-dashboard.active,#sec-rab.active,#sec-lpj.active{display:block;}
+  .saldo-card{grid-column:1 / -1;}
+  .sg{grid-template-columns:repeat(4,1fr);}
+  .ji-tbl{font-size:12px;}
+  .nav{padding:0 20px;gap:4px;}
+  .nb{padding:11px 18px;font-size:12px;}
+  .hdr{padding:18px 24px;}
+  .modal-wrap{align-items:center;}
+  .modal-box,.print-modal-box{border-radius:16px;max-height:85vh;max-width:520px;}
+}
+@media (min-width:1200px){
+  .main{max-width:1100px;}
+}
+/* Sync indicator */
+.sync-indicator{position:fixed;bottom:14px;right:14px;background:rgba(26,46,90,.85);
+  color:white;border-radius:20px;padding:5px 12px;font-size:11px;font-weight:600;
+  display:flex;align-items:center;gap:6px;z-index:500;backdrop-filter:blur(4px);
+  transition:all .3s;cursor:pointer;}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0;}
+.sync-dot.syncing{background:var(--gold);animation:pulse .8s infinite;}
+.sync-dot.offline{background:#f87171;}
+.sync-dot.error{background:#f87171;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+/* Print improvements */
+@media print{
+  .hdr,.nav,.no-print,.sync-indicator,.modal-wrap,.moverlay,.confirm-wrap,.toast{display:none!important;}
+  .main{padding:0;max-width:100%;display:block!important;}
+  .sec{display:none!important;}
+  .sec.print-target{display:block!important;}
+  .card{box-shadow:none;border:1px solid #ddd;margin-bottom:8px;break-inside:avoid;}
+  body{background:white;}
+  * {-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+
+/* ════ ANIMASI & POLISH ════ */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse2{0%,100%{box-shadow:0 0 0 0 rgba(201,162,39,.4)}70%{box-shadow:0 0 0 8px rgba(201,162,39,0)}}
+@keyframes ripple{to{transform:scale(4);opacity:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes floatUp{0%{transform:translateY(0)}50%{transform:translateY(-4px)}100%{transform:translateY(0)}}
+
+.sec.active{animation:fadeInUp .35s cubic-bezier(.22,.68,0,1.2) both;}
+.card{transition:box-shadow .2s,transform .18s;}
+.card:hover{box-shadow:0 8px 32px rgba(26,46,90,.15);}
+.saldo-card{transition:transform .2s;}
+.saldo-card:hover{transform:scale(1.01);}
+.sb{transition:transform .15s,box-shadow .15s;}
+.sb:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,46,90,.13);}
+.btn{position:relative;overflow:hidden;}
+.btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background .15s;}
+.btn:hover::after{background:rgba(255,255,255,.08);}
+.btn:active{transform:scale(.97);}
+.nb{position:relative;overflow:hidden;}
+.nb::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:3px;background:var(--gold);transition:width .25s cubic-bezier(.22,.68,0,1.2);}
+.nb.active::before{width:100%;}
+.hdr{backdrop-filter:blur(12px);}
+
+/* SAKTI-style transaksi item */
+.trx-card{background:var(--card);border-radius:14px;margin-bottom:9px;
+  box-shadow:0 2px 12px rgba(26,46,90,.07);overflow:hidden;
+  animation:fadeInUp .3s both;transition:box-shadow .2s,transform .15s;}
+.trx-card:hover{box-shadow:0 6px 24px rgba(26,46,90,.13);transform:translateY(-1px);}
+.trx-top{display:flex;align-items:center;gap:12px;padding:13px 14px 9px;}
+.trx-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;
+  justify-content:center;font-size:18px;flex-shrink:0;}
+.trx-main{flex:1;min-width:0;}
+.trx-label{font-size:13px;font-weight:700;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;}
+.trx-sub{font-size:11px;color:var(--muted);display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
+.trx-amount{text-align:right;flex-shrink:0;}
+.trx-amt-val{font-size:15px;font-weight:800;}
+.trx-amt-val.in{color:var(--green);}
+.trx-amt-val.out{color:var(--red);}
+.trx-amt-lbl{font-size:10px;color:var(--muted);margin-top:1px;}
+.trx-divider{height:1px;background:var(--bdr);margin:0 14px;}
+.trx-actions{display:flex;gap:0;}
+.trx-act-btn{flex:1;padding:9px 6px;border:none;background:none;
+  font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  color:var(--muted);transition:all .18s;border-top:1px solid var(--bdr);}
+.trx-act-btn:first-child{border-right:1px solid var(--bdr);}
+.trx-act-btn.edit:hover{background:var(--bl);color:var(--navy);}
+.trx-act-btn.del:hover{background:var(--rl);color:var(--red);}
+
+/* SPLASH */
+.splash{position:fixed;inset:0;background:linear-gradient(135deg,var(--navy),#243872);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;transition:opacity .5s,transform .5s;}
+.splash.hide{opacity:0;transform:scale(1.04);pointer-events:none;}
+.splash-logo{font-size:56px;animation:floatUp 2s ease-in-out infinite;}
+.splash-title{font-family:"Playfair Display",serif;font-size:22px;color:white;
+  margin-top:16px;text-align:center;line-height:1.4;}
+.splash-sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;text-align:center;}
+.splash-bar{width:160px;height:3px;background:rgba(255,255,255,.2);border-radius:99px;
+  margin-top:28px;overflow:hidden;}
+.splash-fill{height:100%;width:0%;background:var(--gold);border-radius:99px;
+  transition:width .1s linear;}
+.splash-theme{font-size:11px;color:rgba(255,255,255,.45);margin-top:16px;
+  font-style:italic;text-align:center;max-width:260px;line-height:1.5;}
+
+/* SKELETON loader */
+.skel{background:linear-gradient(90deg,#eee 25%,#f8f8f8 50%,#eee 75%);
+  background-size:400px 100%;animation:shimmer 1.2s infinite;
+  border-radius:8px;height:14px;margin-bottom:6px;}
+.skel.wide{width:100%;}.skel.mid{width:65%;}.skel.short{width:40%;height:10px;}
+
+/* page transition */
+.sec{opacity:0;}.sec.active{opacity:1;}
+
+/* modal animation */
+.modal-wrap .modal-box,.modal-wrap .print-modal-box{
+  transform:translateY(60px);opacity:0;transition:transform .3s cubic-bezier(.22,.68,0,1.2),opacity .3s;}
+.modal-wrap.open .modal-box,.modal-wrap.open .print-modal-box{transform:translateY(0);opacity:1;}
+
+/* number animation */
+.val-anim{transition:all .4s cubic-bezier(.22,.68,0,1.2);}
+
+/* ripple on buttons */
+.ripple-effect{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);
+  transform:scale(0);animation:ripple .5s linear;pointer-events:none;}
+
+/* header cross icon float */
+.hdr-cross{font-size:22px;animation:floatUp 3s ease-in-out infinite;}
+
+/* FT card animated */
+.ft-item{animation:scaleIn .25s both;}
+.ft-item:nth-child(1){animation-delay:.05s}
+.ft-item:nth-child(2){animation-delay:.1s}
+.ft-item:nth-child(3){animation-delay:.15s}
+.ft-item:nth-child(4){animation-delay:.2s}
+.ft-item:nth-child(5){animation-delay:.25s}
+.ft-item:nth-child(6){animation-delay:.3s}
+
+/* sync pulse */
+.sync-dot{animation:none;}
+.sync-dot.syncing{animation:pulse2 1s infinite;}
+
+</style>
+</head>
+<body>
+
+<div class="splash" id="splash">
+  <div class="splash-logo">✝️</div>
+  <div class="splash-title">Keuangan HUT<br/>GKPS Binjai ke-63</div>
+  <div class="splash-sub">3 Mei 1963 – 3 Mei 2026</div>
+  <div class="splash-bar"><div class="splash-fill" id="splashFill"></div></div>
+  <div class="splash-theme">"Gereja yang peduli,<br/>produktif-mandiri dan membawa berkat"</div>
+</div>
+
+<div class="hdr">
+  <div class="hdr-row">
+    <div style="display:flex;align-items:center;gap:10px"><span class="hdr-cross">✝️</span><div><h1>HUT GKPS Binjai ke-63</h1><p>💰 Bendahara — Yosi Permatasari Sinaga</p></div></div>
+    <span class="hdrbadge">17 MEI 2026</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nb active" onclick="sw('dashboard',this)">📊 Dashboard</button>
+  <button class="nb" onclick="sw('masuk',this)">📥 Pemasukan</button>
+  <button class="nb" onclick="sw('keluar',this)">📤 Pengeluaran</button>
+  <button class="nb" onclick="sw('janji',this)">🤝 Janji Iman</button>
+  <button class="nb" onclick="sw('seksi',this)">🏛️ Seksi</button>
+  <button class="nb" onclick="sw('rab',this)">📋 RAB vs Realisasi</button>
+  <button class="nb" onclick="sw('lpj',this)">🖨️ LPJ & Print</button>
+</div>
+
+<div class="main">
+
+<!-- ═══ DASHBOARD ═══ -->
+<div class="sec active" id="sec-dashboard">
+  <div class="saldo-card">
+    <div class="sl">Saldo Saat Ini</div>
+    <div class="sv" id="d-saldo">Rp 0</div>
+    <div class="ss" id="d-status">⏳ Memuat...</div>
+  </div>
+  <div class="sg">
+    <div class="sb gn"><div class="lbl">Total Masuk</div><div class="val" id="d-masuk">Rp 0</div><div class="sub" id="d-masuk-n">0 trx</div></div>
+    <div class="sb rd"><div class="lbl">Total Keluar</div><div class="val" id="d-keluar">Rp 0</div><div class="sub" id="d-keluar-n">0 trx</div></div>
+    <div class="sb gd"><div class="lbl">Total RAB</div><div class="val">Rp 154,9 Jt</div><div class="sub" id="d-rab-pct">0% terserap</div></div>
+    <div class="sb bl"><div class="lbl">Janji Iman</div><div class="val" id="d-ji">Rp 0</div><div class="sub" id="d-ji-sub">0 bon</div></div>
+  </div>
+  <!-- RAB vs Realisasi mini -->
+  <div class="card" style="padding:13px">
+    <div class="ctitle" style="font-size:12px;margin-bottom:9px">
+      <div class="cicon" style="background:#fff8e1">📋</div>RAB vs Realisasi
+      <button class="btn btn-sm" style="margin-left:auto;background:var(--bl);color:var(--navy)" onclick="sw('rab',document.querySelectorAll('.nb')[5])">Lihat Detail →</button>
+    </div>
+    <div id="d-rab-bars"></div>
+  </div>
+  <!-- Tunai vs Non-Tunai -->
+  <div class="card" style="padding:13px">
+    <div class="ctitle" style="font-size:12px;margin-bottom:8px"><div class="cicon" style="background:var(--gl)">💵</div>Tunai vs Non-Tunai</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+      <div style="background:var(--gl);border-radius:8px;padding:8px"><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Masuk Tunai</div><div style="font-size:12px;font-weight:800;color:var(--green);margin-top:2px" id="d-mt">Rp 0</div></div>
+      <div style="background:var(--bl);border-radius:8px;padding:8px"><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Masuk Non-Tunai</div><div style="font-size:12px;font-weight:800;color:var(--navy);margin-top:2px" id="d-mnt">Rp 0</div></div>
+      <div style="background:var(--rl);border-radius:8px;padding:8px"><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Keluar Tunai</div><div style="font-size:12px;font-weight:800;color:var(--red);margin-top:2px" id="d-kt">Rp 0</div></div>
+      <div style="background:#fff8e1;border-radius:8px;padding:8px"><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Keluar Non-Tunai</div><div style="font-size:12px;font-weight:800;color:#b8860b;margin-top:2px" id="d-knt">Rp 0</div></div>
+    </div>
+  </div>
+  <!-- Chart -->
+  <div class="card">
+    <div class="ctitle"><div class="cicon" style="background:var(--bl)">📊</div>Diagram Keuangan Pesta</div>
+    <div style="display:flex;gap:5px;margin-bottom:9px;flex-wrap:wrap">
+      <button class="btn btn-sm btn-p" onclick="setChart('donut')">🍩 Komposisi</button>
+      <button class="btn btn-sm" style="background:var(--gl);color:var(--green)" onclick="setChart('bar')">📊 Masuk/Keluar</button>
+      <button class="btn btn-sm" style="background:#fff8e1;color:#b8860b" onclick="setChart('ji')">🤝 Janji Iman</button>
+      <button class="btn btn-sm" style="background:var(--rl);color:var(--red)" onclick="setChart('rab')">📋 RAB vs Real</button>
+    </div>
+    <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="ctitle"><div class="cicon" style="background:#fff8e1">🕐</div>Transaksi Terakhir</div>
+    <div id="d-recent"><div class="empty"><div class="ei">📭</div><p>Belum ada data</p></div></div>
+  </div>
+</div>
+
+<!-- ═══ PEMASUKAN ═══ -->
+<div class="sec" id="sec-masuk">
+  <div class="card" id="masuk-form-card">
+    <div class="ctitle"><div class="cicon" style="background:var(--gl)">📥</div>Catat Pemasukan</div>
+    <div class="fg"><label class="fl">Tanggal *</label><input type="date" class="fi" id="m-tgl"/></div>
+    <div class="fg"><label class="fl">Sumber Dana / Pemberi *</label><input type="text" class="fi" id="m-src" placeholder="cth: Kolekte Minggu 4 Mei"/></div>
+    <div class="fg"><label class="fl">Kategori *</label>
+      <select class="fs" id="m-kat"><option value="">-- Pilih --</option><option>Kolekte / Persembahan</option><option>Sumbangan Jemaat</option><option>Donasi Khusus</option><option>Iuran Panitia</option><option>Transfer Bank</option><option>Biaya Admin Bank</option><option>Lain-lain</option></select></div>
+    <div class="fg"><label class="fl">Jumlah (Rp) *</label><input type="number" class="fi" id="m-jml" placeholder="0" inputmode="numeric"/></div>
+    <div class="fg"><label class="fl">Metode Penerimaan *</label>
+      <div class="mt"><button type="button" class="mb at" id="m-bt" onclick="setM('masuk','tunai')">💵 Tunai</button><button type="button" class="mb" id="m-bn" onclick="setM('masuk','nontunai')">📱 Non-Tunai</button></div>
+      <input type="hidden" id="m-met" value="tunai"/>
+      <div class="ntf" id="m-ntf">
+        <div style="height:8px"></div>
+        <label class="fl">Bank / E-wallet</label>
+        <select class="fs" id="m-bank" style="margin-bottom:8px"><option value="">-- Pilih --</option><option>Transfer BCA</option><option>Transfer BNI</option><option>Transfer BRI</option><option>Transfer Mandiri</option><option>Transfer BSI</option><option>GoPay</option><option>OVO</option><option>Dana</option><option>QRIS</option><option>Lainnya</option></select>
+        <label class="fl">No. Referensi</label>
+        <input type="text" class="fi" id="m-ref" placeholder="cth: REF20260517001" style="margin-bottom:8px"/>
+        <label class="fl">Biaya Admin Bank (Rp)</label>
+        <input type="number" class="fi" id="m-admin" placeholder="0 jika tidak ada" inputmode="numeric"/>
+        <div style="font-size:10px;color:var(--muted);margin-top:3px">💡 Biaya admin otomatis dicatat sebagai pengeluaran "Biaya Admin Bank"</div>
+      </div>
+    </div>
+    <div class="fg"><label class="fl">Keterangan</label><textarea class="ft" id="m-ket" placeholder="Catatan tambahan..."></textarea></div>
+    <div class="fg"><label class="fl">Foto Bukti (opsional)</label>
+      <div class="ua" onclick="document.getElementById('fMasuk').click()"><div class="ui">📸</div><strong>Tap untuk foto</strong><p>Foto struk / bukti transfer</p><img class="uprev" id="pvMasuk"/></div>
+      <input type="file" id="fMasuk" accept="image/*" capture="environment" style="display:none" onchange="prevImg(this,'pvMasuk')"/>
+    </div>
+    <input type="hidden" id="m-edit-id" value=""/>
+    <div class="row-btns">
+      <button class="btn btn-s" onclick="simpanMasuk()" style="flex:1" id="m-save-btn">💾 Simpan Pemasukan</button>
+      <button class="btn btn-o btn-sm" onclick="batalEditMasuk()" id="m-cancel-btn" style="display:none">✕ Batal</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ctitle"><div class="cicon" style="background:var(--gl)">📋</div>Riwayat Pemasukan
+      <div style="margin-left:auto;display:flex;gap:5px">
+        <button class="btn btn-sm" style="background:var(--gl);color:var(--green)" onclick="bukaModalPrint('masuk')">🖨️ Print</button>
+        <button class="btn btn-sm" style="background:var(--bl);color:var(--navy)" onclick="exportCSV('masuk')">📥 CSV</button>
+      </div>
+    </div>
+    <div id="masuk-list"></div>
+  </div>
+</div>
+
+<!-- ═══ PENGELUARAN ═══ -->
+<div class="sec" id="sec-keluar">
+  <div class="card" id="keluar-form-card">
+    <div class="ctitle"><div class="cicon" style="background:var(--rl)">📤</div>Catat Pengeluaran</div>
+    <div class="fg"><label class="fl">Tanggal *</label><input type="date" class="fi" id="k-tgl"/></div>
+    <div class="fg"><label class="fl">Seksi *</label>
+      <select class="fs" id="k-seksi"><option value="">-- Pilih --</option><option>Sie Konsumsi</option><option>Sie Acara / Hiburan</option><option>Full Timer Musik</option><option>Sie Perlombaan</option><option>Sie Tempat / Parkir</option><option>Sie Dokumentasi</option><option>Sie Kesehatan</option><option>Pengadaan Alat Musik</option><option>Pengadaan Sound System / TV</option><option>Biaya Admin Bank</option><option>Operasional / Lain-lain</option></select></div>
+    <div class="fg"><label class="fl">Uraian Pengeluaran *</label><input type="text" class="fi" id="k-urai" placeholder="cth: Konsumsi nasi kotak 100 pcs"/></div>
+    <div class="fg"><label class="fl">Jumlah (Rp) *</label><input type="number" class="fi" id="k-jml" placeholder="0" inputmode="numeric"/></div>
+    <div class="fg"><label class="fl">Metode Pembayaran *</label>
+      <div class="mt"><button type="button" class="mb at" id="k-bt" onclick="setM('keluar','tunai')">💵 Tunai</button><button type="button" class="mb" id="k-bn" onclick="setM('keluar','nontunai')">📱 Non-Tunai</button></div>
+      <input type="hidden" id="k-met" value="tunai"/>
+      <div class="ntf" id="k-ntf">
+        <div style="height:8px"></div>
+        <label class="fl">Bank / E-wallet</label>
+        <select class="fs" id="k-bank" style="margin-bottom:8px"><option value="">-- Pilih --</option><option>Transfer BCA</option><option>Transfer BNI</option><option>Transfer BRI</option><option>Transfer Mandiri</option><option>Transfer BSI</option><option>GoPay</option><option>OVO</option><option>Dana</option><option>QRIS</option><option>Lainnya</option></select>
+        <label class="fl">No. Referensi</label>
+        <input type="text" class="fi" id="k-ref" placeholder="cth: REF20260517001"/>
+      </div>
+    </div>
+    <div class="fg"><label class="fl">Keterangan</label><textarea class="ft" id="k-ket" placeholder="Jelaskan keperluan..."></textarea></div>
+    <div class="fg"><label class="fl">📸 Foto Nota / Bukti</label>
+      <div class="ua" onclick="document.getElementById('fKeluar').click()"><div class="ui">🧾</div><strong>Foto nota / kwitansi</strong><p>Lampirkan bukti pengeluaran</p><img class="uprev" id="pvKeluar"/></div>
+      <input type="file" id="fKeluar" accept="image/*" capture="environment" style="display:none" onchange="prevImg(this,'pvKeluar')"/>
+    </div>
+    <input type="hidden" id="k-edit-id" value=""/>
+    <div class="row-btns">
+      <button class="btn btn-p" onclick="simpanKeluar()" style="flex:1" id="k-save-btn">💾 Simpan Pengeluaran</button>
+      <button class="btn btn-o btn-sm" onclick="batalEditKeluar()" id="k-cancel-btn" style="display:none">✕ Batal</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ctitle"><div class="cicon" style="background:var(--rl)">📋</div>Riwayat Pengeluaran
+      <div style="margin-left:auto;display:flex;gap:5px">
+        <button class="btn btn-sm" style="background:var(--rl);color:var(--red)" onclick="bukaModalPrint('keluar')">🖨️ Print</button>
+        <button class="btn btn-sm" style="background:var(--bl);color:var(--navy)" onclick="exportCSV('keluar')">📥 CSV</button>
+      </div>
+    </div>
+    <div id="keluar-list"></div>
+  </div>
+</div>
+
+<!-- ═══ JANJI IMAN ═══ -->
+<div class="sec" id="sec-janji">
+  <div class="card">
+    <div class="ctitle"><div class="cicon" style="background:#fff8e1">🤝</div>Tambah Janji Iman</div>
+    <div class="fg"><label class="fl">Nama Keluarga / Jemaat *</label><input type="text" class="fi" id="ji-nama" placeholder="cth: Marthinus P. Hutasoit"/></div>
+    <div class="fg"><label class="fl">Sektor *</label>
+      <select class="fs" id="ji-sektor"><option value="">-- Pilih --</option><option>Sektor I</option><option>Sektor II</option><option>Sektor III</option></select></div>
+    <div class="fg"><label class="fl">Jumlah Total Janji (Rp) *</label><input type="number" class="fi" id="ji-jml" placeholder="0" inputmode="numeric"/></div>
+    <div class="fg"><label class="fl">Status Pembayaran *</label>
+      <div class="mt" style="grid-template-columns:1fr 1fr 1fr">
+        <button type="button" class="mb at" id="ji-bt" onclick="setJiStatus('lunas-tunai')">💵 Lunas Tunai</button>
+        <button type="button" class="mb" id="ji-bn" onclick="setJiStatus('lunas-transfer')">📱 Transfer</button>
+        <button type="button" class="mb" id="ji-bb" onclick="setJiStatus('bon')">📋 Bon/Cicil</button>
+      </div>
+      <input type="hidden" id="ji-status" value="lunas-tunai"/>
+      <div id="ji-ntf-bank" style="display:none;margin-top:10px">
+        <label class="fl">Bank / E-wallet</label>
+        <select class="fs" id="ji-bank"><option value="">-- Pilih --</option><option>Transfer BCA</option><option>Transfer BNI</option><option>Transfer BRI</option><option>Transfer Mandiri</option><option>Transfer BSI</option><option>QRIS</option><option>Lainnya</option></select>
+      </div>
+    </div>
+    <div class="fg"><label class="fl">Tanggal</label><input type="date" class="fi" id="ji-tgl"/></div>
+    <div class="fg"><label class="fl">Keterangan</label><input type="text" class="fi" id="ji-ket" placeholder="cth: Lunas saat pesta"/></div>
+    <input type="hidden" id="ji-edit-id" value=""/>
+    <div class="row-btns">
+      <button class="btn btn-g" onclick="simpanJI()" style="flex:1" id="ji-save-btn">💾 Simpan</button>
+      <button class="btn btn-o btn-sm" onclick="batalEditJI()" id="ji-cancel-btn" style="display:none">✕ Batal</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ctitle"><div class="cicon" style="background:#fff8e1">📊</div>Rekap Janji Iman
+      <div style="margin-left:auto"><button class="btn btn-sm" style="background:#fff8e1;color:#b8860b" onclick="bukaModalPrint('janji')">🖨️ Print</button></div>
+    </div>
+    <div class="sg">
+      <div class="sb gn"><div class="lbl">Total Lunas</div><div class="val" id="ji-total-lunas">Rp 0</div></div>
+      <div class="sb rd"><div class="lbl">Total Bon</div><div class="val" id="ji-total-bon">Rp 0</div></div>
+      <div class="sb bl"><div class="lbl">Sudah Cicil</div><div class="val" id="ji-total-cicil">Rp 0</div></div>
+      <div class="sb gd"><div class="lbl">Sisa Bon</div><div class="val" id="ji-sisa-bon">Rp 0</div></div>
+    </div>
+    <div style="margin-bottom:9px;display:flex;gap:5px;flex-wrap:wrap">
+      <button class="btn btn-sm btn-p" onclick="filterJI('semua')">Semua</button>
+      <button class="btn btn-sm" style="background:var(--gl);color:var(--green)" onclick="filterJI('lunas')">✅ Lunas</button>
+      <button class="btn btn-sm" style="background:#fff3cd;color:#856404" onclick="filterJI('bon')">📋 Bon</button>
+      <button class="btn btn-sm" style="background:var(--bl);color:var(--navy)" onclick="filterJI('Sektor I')">Sektor I</button>
+      <button class="btn btn-sm" style="background:var(--bl);color:var(--navy)" onclick="filterJI('Sektor II')">Sektor II</button>
+      <button class="btn btn-sm" style="background:var(--bl);color:var(--navy)" onclick="filterJI('Sektor III')">Sektor III</button>
+    </div>
+    <div id="ji-list"></div>
+  </div>
+</div>
+
+<!-- ═══ SEKSI ═══ -->
+<div class="sec" id="sec-seksi">
+<!-- FULL TIMER CARD -->
+<div class="ft-card" id="ftCard">
+  <h3>🎵 Full Timer Musik — Transport</h3>
+  <p>Klik nama untuk input biaya transport. Otomatis masuk ke pengeluaran total.</p>
+  <div class="ft-grid" id="ftGrid">
+    <!-- diisi JS -->
+  </div>
+  <div style="margin-top:10px;font-size:11px;opacity:.6;text-align:center">
+    RAB Total Full Timer: <strong>Rp 5.000.000</strong>
+  </div>
+</div>
+
+  <div class="card" id="seksi-form-card">
+    <div class="ctitle"><div class="cicon" style="background:var(--rl)">➕</div>Tambah Kegiatan & Dokumentasi Seksi</div>
+    <div class="fg"><label class="fl">Seksi *</label>
+      <select class="fs" id="sk-seksi"><option value="">-- Pilih --</option><option>Sie Konsumsi</option><option>Sie Acara / Hiburan</option><option>Full Timer Musik</option><option>Sie Perlombaan</option><option>Sie Tempat / Parkir</option><option>Sie Dokumentasi</option><option>Sie Kesehatan</option><option>Pengadaan Alat Musik</option><option>Pengadaan Sound System / TV</option><option>Operasional / Lain-lain</option></select></div>
+    <div class="fg"><label class="fl">Nama Kegiatan *</label><input type="text" class="fi" id="sk-kegiatan" placeholder="cth: Persiapan dekorasi panggung"/></div>
+    <div class="fg"><label class="fl">Tanggal Kegiatan</label><input type="date" class="fi" id="sk-tgl"/></div>
+    <div class="fg"><label class="fl">Keterangan / Deskripsi</label><textarea class="ft" id="sk-ket" placeholder="Jelaskan kegiatan, kendala, dll..."></textarea></div>
+    <div class="fg"><label class="fl">📸 Dokumentasi</label>
+      <div class="ua" onclick="document.getElementById('fSeksi').click()"><div class="ui">📸</div><strong>Foto kegiatan / proses / hasil</strong><p>Dokumentasi seksi</p><img class="uprev" id="pvSeksi"/></div>
+      <input type="file" id="fSeksi" accept="image/*" capture="environment" style="display:none" onchange="prevImg(this,'pvSeksi')"/>
+    </div>
+    <div class="fg"><label class="fl">💰 Biaya Terkait (Rp)</label>
+      <input type="number" class="fi" id="sk-biaya" placeholder="0 jika tidak ada" inputmode="numeric"/>
+      <div style="font-size:10px;color:var(--muted);margin-top:3px">💡 Jika diisi, otomatis dicatat ke pengeluaran seksi ini</div>
+    </div>
+    <input type="hidden" id="sk-edit-id" value=""/>
+    <div class="row-btns">
+      <button class="btn btn-p" onclick="simpanKegiatan()" style="flex:1" id="sk-save-btn">💾 Simpan Kegiatan</button>
+      <button class="btn btn-o btn-sm" onclick="batalEditKegiatan()" id="sk-cancel-btn" style="display:none">✕ Batal</button>
+    </div>
+  </div>
+  <div id="seksi-list"></div>
+</div>
+
+<!-- ═══ RAB vs REALISASI ═══ -->
+<div class="sec" id="sec-rab">
+  <div class="card">
+    <div class="ctitle"><div class="cicon" style="background:#fff8e1">📋</div>Perbandingan RAB vs Realisasi</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Centang ✅ jika sudah terealisasi. Jika belum/tidak, tulis alasannya.</p>
+    <div class="sg" style="margin-bottom:12px">
+      <div class="sb gn"><div class="lbl">Total RAB</div><div class="val">Rp 154,9 Jt</div></div>
+      <div class="sb rd"><div class="lbl">Total Realisasi</div><div class="val" id="rab-real-total">Rp 0</div></div>
+      <div class="sb gd"><div class="lbl">Selisih</div><div class="val" id="rab-selisih">Rp 0</div></div>
+      <div class="sb bl"><div class="lbl">Terealisasi</div><div class="val" id="rab-pct-done">0 / 13</div></div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:10px">
+      <button class="btn btn-sm btn-p" onclick="filterRAB('semua')">Semua</button>
+      <button class="btn btn-sm" style="background:var(--gl);color:var(--green)" onclick="filterRAB('ok')">✅ Terealisasi</button>
+      <button class="btn btn-sm" style="background:var(--rl);color:var(--red)" onclick="filterRAB('belum')">❌ Belum</button>
+    </div>
+    <div id="rab-list"></div>
+  </div>
+</div>
+
+<!-- ═══ LPJ & PRINT ═══ -->
+<div class="sec" id="sec-lpj">
+  <!-- Print controls -->
+  <div class="card no-print" style="border:2px solid var(--gold)">
+    <div class="ctitle" style="color:var(--gold)"><div class="cicon" style="background:#fff8e1">🖨️</div>Cetak / Print LPJ Lengkap</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:11px">LPJ lengkap dengan semua pemasukan, pengeluaran, janji iman, dan RAB vs realisasi.</p>
+    <button class="btn btn-g" onclick="printLPJ()">🖨️ Print / Simpan PDF</button>
+  </div>
+  <!-- LPJ Content -->
+  <div id="lpj-content">
+    <div class="card" style="text-align:center;padding:18px">
+      <div style="font-size:20px;margin-bottom:7px">✝️</div>
+      <h2 style="font-size:14px;color:var(--navy);margin-bottom:4px">LAPORAN PERTANGGUNGJAWABAN KEUANGAN</h2>
+      <p style="font-size:12px;font-weight:700;color:var(--navy)">PESTA HUT GKPS JEMAAT BINJAI KE-63</p>
+      <p style="font-size:11px;color:var(--muted)">3 Mei 1963 – 3 Mei 2026 | Dilaksanakan: 17 Mei 2026</p>
+      <p style="font-size:10px;color:var(--muted);font-style:italic;margin-top:3px">"Gereja Nasari Martangkupas Janah Siboan Pasu-pasu"</p>
+    </div>
+    <div class="card"><div class="ctitle"><div class="cicon" style="background:var(--gl)">A</div>Rekapitulasi Pemasukan</div>
+      <table style="width:100%;border-collapse:collapse;font-size:11px">
+        <tr style="background:var(--navy);color:white"><th style="padding:6px">Tgl</th><th style="padding:6px">Sumber Dana</th><th style="padding:6px">Metode</th><th style="padding:6px;text-align:right">Rp</th></tr>
+        <tbody id="lpj-masuk-rows"></tbody>
+        <tr style="background:var(--gl);font-weight:700"><td colspan="3" style="padding:6px">TOTAL PEMASUKAN</td><td style="padding:6px;text-align:right" id="lpj-total-masuk">-</td></tr>
+      </table>
+    </div>
+    <div class="card"><div class="ctitle"><div class="cicon" style="background:var(--rl)">B</div>Rekapitulasi Pengeluaran per Seksi</div>
+      <table style="width:100%;border-collapse:collapse;font-size:11px">
+        <tr style="background:var(--navy);color:white"><th style="padding:6px">Tgl</th><th style="padding:6px">Seksi</th><th style="padding:6px">Uraian</th><th style="padding:6px">Metode</th><th style="padding:6px;text-align:right">Rp</th></tr>
+        <tbody id="lpj-keluar-rows"></tbody>
+        <tr style="background:var(--rl);font-weight:700"><td colspan="4" style="padding:6px">TOTAL PENGELUARAN</td><td style="padding:6px;text-align:right" id="lpj-total-keluar">-</td></tr>
+      </table>
+    </div>
+    <div class="card"><div class="ctitle"><div class="cicon" style="background:#fff8e1">C</div>Rekap Janji Iman per Sektor</div>
+      <table style="width:100%;border-collapse:collapse;font-size:11px">
+        <tr style="background:var(--navy);color:white"><th style="padding:6px">Sektor</th><th style="padding:6px;text-align:right">Kontan</th><th style="padding:6px;text-align:right">Transfer</th><th style="padding:6px;text-align:right">Bon</th><th style="padding:6px;text-align:right">Total</th></tr>
+        <tbody id="lpj-ji-rows"></tbody>
+        <tr style="background:#fff8e1;font-weight:700" id="lpj-ji-total"></tr>
+      </table>
+    </div>
+    <div class="card"><div class="ctitle"><div class="cicon" style="background:var(--bl)">D</div>RAB vs Realisasi</div>
+      <table style="width:100%;border-collapse:collapse;font-size:10px">
+        <tr style="background:var(--navy);color:white"><th style="padding:5px">Uraian</th><th style="padding:5px;text-align:right">RAB</th><th style="padding:5px;text-align:right">Realisasi</th><th style="padding:5px;text-align:right">Selisih</th><th style="padding:5px">Status</th></tr>
+        <tbody id="lpj-rab-rows"></tbody>
+      </table>
+    </div>
+    <div class="card"><div class="ctitle"><div class="cicon" style="background:var(--gl)">E</div>Saldo Akhir</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <tr><td style="padding:7px;font-weight:600">Total Pemasukan</td><td style="padding:7px;text-align:right;color:var(--green);font-weight:700" id="lpj-s-masuk">-</td></tr>
+        <tr style="background:var(--bg)"><td style="padding:7px;font-weight:600">Total Pengeluaran</td><td style="padding:7px;text-align:right;color:var(--red);font-weight:700" id="lpj-s-keluar">-</td></tr>
+        <tr style="background:var(--gl)"><td style="padding:7px;font-weight:800;font-size:13px">SALDO AKHIR</td><td style="padding:7px;text-align:right;font-weight:800;font-size:13px;color:var(--green)" id="lpj-saldo">-</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div style="text-align:right;font-size:11px;color:var(--muted);margin-bottom:14px">Binjai, Mei 2026</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:center;font-size:11px">
+        <div><p style="font-weight:700;margin-bottom:50px">Ketua Panitia,</p><div style="border-top:1px solid var(--navy);padding-top:5px;font-weight:700">Marthinus P. Hutasoit</div></div>
+        <div><p style="font-weight:700;margin-bottom:50px">Bendahara,</p><div style="border-top:1px solid var(--navy);padding-top:5px;font-weight:700">Yosi Permatasari Sinaga</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- MODAL PRINT FILTER -->
+<div class="modal-wrap" id="modalPrint">
+  <div class="print-modal-box">
+    <h3 id="printModalTitle">🖨️ Print Laporan <button class="modal-close-btn" onclick="tutupModalPrint()">✕</button></h3>
+    <div class="fg"><label class="fl">Dari Tanggal</label><input type="date" class="fi" id="print-dari"/></div>
+    <div class="fg"><label class="fl">Sampai Tanggal</label><input type="date" class="fi" id="print-sampai"/></div>
+    <div class="fg"><label class="fl">Format</label>
+      <div class="mt"><button type="button" class="mb at" id="print-fmt-pdf" onclick="setPrintFmt('pdf')">📄 PDF / Print</button><button type="button" class="mb" id="print-fmt-csv" onclick="setPrintFmt('csv')">📊 Excel / CSV</button></div>
+      <input type="hidden" id="print-fmt" value="pdf"/>
+    </div>
+    <div style="background:var(--bg);border-radius:9px;padding:10px;margin-bottom:12px;font-size:12px" id="print-preview-info"></div>
+    <div class="row-btns">
+      <button class="btn btn-g" onclick="eksekusiPrint()" style="flex:1" id="print-exec-btn">🖨️ Print Sekarang</button>
+      <button class="btn btn-o btn-sm" onclick="tutupModalPrint()">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CICIL -->
+<div class="modal-wrap" id="modalCicil">
+  <div class="modal-box">
+    <h3>📋 Cicilan Janji Iman <button class="modal-close-btn" onclick="tutupModalCicil()">✕</button></h3>
+    <div id="cicil-info" style="background:var(--bg);border-radius:9px;padding:10px;margin-bottom:12px;font-size:12px"></div>
+    <div class="fg"><label class="fl">Tanggal Cicilan *</label><input type="date" class="fi" id="cicil-tgl"/></div>
+    <div class="fg"><label class="fl">Jumlah Cicilan (Rp) *</label><input type="number" class="fi" id="cicil-jml" placeholder="0" inputmode="numeric"/></div>
+    <div class="fg"><label class="fl">Metode</label>
+      <div class="mt"><button type="button" class="mb at" id="cicil-bt" onclick="setCicilM('tunai')">💵 Tunai</button><button type="button" class="mb" id="cicil-bn" onclick="setCicilM('nontunai')">📱 Transfer</button></div>
+      <input type="hidden" id="cicil-met" value="tunai"/>
+      <div class="ntf" id="cicil-ntf"><div style="height:8px"></div><input type="text" class="fi" id="cicil-ref" placeholder="Bank / No. Referensi"/></div>
+    </div>
+    <div class="fg"><label class="fl">Keterangan</label><input type="text" class="fi" id="cicil-ket" placeholder="cth: Cicilan ke-1"/></div>
+    <input type="hidden" id="cicil-ji-id" value=""/>
+    <div class="row-btns">
+      <button class="btn btn-g" onclick="simpanCicilan()" style="flex:1">💾 Simpan Cicilan</button>
+      <button class="btn btn-o btn-sm" onclick="tutupModalCicil()">Batal</button>
+    </div>
+    <div class="divider"></div>
+    <div class="slbl">Riwayat Cicilan</div>
+    <div id="cicil-list"></div>
+  </div>
+</div>
+
+<!-- MODAL FULL TIMER INPUT -->
+<div class="modal-wrap" id="modalFT">
+  <div class="modal-box">
+    <h3 id="ftModalTitle">🎵 Full Timer <button class="modal-close-btn" onclick="tutupModalFT()">✕</button></h3>
+    <div id="ftModalInfo" style="background:var(--bg);border-radius:9px;padding:10px;margin-bottom:12px;font-size:12px"></div>
+    <div class="fg"><label class="fl">Tanggal *</label><input type="date" class="fi" id="ft-tgl"/></div>
+    <div class="fg"><label class="fl">Jumlah Transport (Rp) *</label><input type="number" class="fi" id="ft-jml" placeholder="0" inputmode="numeric"/></div>
+    <div class="fg"><label class="fl">Metode Pembayaran</label>
+      <div class="mt">
+        <button type="button" class="mb at" id="ft-bt" onclick="setFTM('tunai')">💵 Tunai</button>
+        <button type="button" class="mb" id="ft-bn" onclick="setFTM('nontunai')">📱 Transfer</button>
+      </div>
+      <input type="hidden" id="ft-met" value="tunai"/>
+      <div class="ntf" id="ft-ntf">
+        <div style="height:8px"></div>
+        <input type="text" class="fi" id="ft-ref" placeholder="Bank / No. Referensi"/>
+      </div>
+    </div>
+    <div class="fg"><label class="fl">Keterangan</label><input type="text" class="fi" id="ft-ket" placeholder="cth: Transport pesta 17 Mei 2026"/></div>
+    <div class="fg"><label class="fl">📸 Foto Bukti (opsional)</label>
+      <div class="ua" onclick="document.getElementById('fFT').click()"><div class="ui">📸</div><strong>Foto bukti</strong><p>Kwitansi atau bukti transfer</p><img class="uprev" id="pvFT"/></div>
+      <input type="file" id="fFT" accept="image/*" capture="environment" style="display:none" onchange="prevImg(this,'pvFT')"/>
+    </div>
+    <input type="hidden" id="ft-key" value=""/>
+    <div class="row-btns">
+      <button class="btn btn-p" onclick="simpanFT()" style="flex:1">💾 Simpan & Catat ke Pengeluaran</button>
+      <button class="btn btn-o btn-sm" onclick="tutupModalFT()">Batal</button>
+    </div>
+    <div class="divider"></div>
+    <div class="slbl">Riwayat Pembayaran</div>
+    <div id="ft-riwayat-list"></div>
+  </div>
+</div>
+
+<!-- FOTO MODAL -->
+<div class="moverlay" id="mFoto" onclick="closeFoto()">
+  <button class="mclose" onclick="closeFoto()">✕</button>
+  <img class="mimg" id="mImg" src="" alt="Bukti"/>
+</div>
+
+<!-- CONFIRM DELETE -->
+<div class="confirm-wrap" id="confirmWrap">
+  <div class="confirm-box">
+    <h3>🗑️ Hapus Data?</h3>
+    <p id="confirmMsg">Yakin ingin menghapus data ini?</p>
+    <div class="confirm-btns">
+      <button class="btn btn-sm" style="background:var(--bdr);color:var(--text)" onclick="closeConfirm()">Batal</button>
+      <button class="btn btn-sm btn-d" id="confirmOk">Hapus</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRINT FRAME (hidden) -->
+<div id="printFrame" style="display:none"></div>
+<div class="sync-indicator" id="syncInd" onclick="manualSync()" title="Klik untuk sync manual">
+  <div class="sync-dot" id="syncDot"></div>
+  <span id="syncTxt">Offline</span>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CFG={GAS_URL:'',NAMA_BENDAHARA:'Yosi Permatasari Sinaga'};
+
+// ═══ DATA ═══
+let DATA = {"masuk": [{"id": "bm1", "tanggal": "04 May 2026", "sumber": "Transfer dari BANK MANDIRI ANDRICO MANURUNG 1240007974687", "kategori": "Transfer Bank", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm2", "tanggal": "09 May 2026", "sumber": "Transfer BI Fast Dari BANK PERMATA RUEN LAMRI SINAGA 7082800 St. Rijen L. Sinaga PMJ GKPS Graha Raya", "kategori": "Transfer Bank", "jumlah": 2000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm3", "tanggal": "09 May 2026", "sumber": "Transfer BI Fast Dari BANK BNI DODY ANDOHAR JAYA SI 850005034 NN proposal no 006", "kategori": "Transfer Bank", "jumlah": 500000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm4", "tanggal": "11 May 2026", "sumber": "Transfer BI Fast Dari BSI FAQIHUSMAN 1047122844", "kategori": "Transfer Bank", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm5", "tanggal": "12 May 2026", "sumber": "Transfer dari BANK MANDIRI HASUDUNGAN PANDIANGA 1030004520876", "kategori": "Transfer Bank", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm6", "tanggal": "13 May 2026", "sumber": "Transfer BI Fast Dari BANK BNI MARYANTO 57829781", "kategori": "Transfer Bank", "jumlah": 500000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm7", "tanggal": "14 May 2026", "sumber": "Transfer dari BANK MANDIRI SIKTUS SITUMORANG 1720001758459 Bantuan Biaya Pesta Ulta GKPS", "kategori": "Transfer Bank", "jumlah": 500000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm8", "tanggal": "14 May 2026", "sumber": "Transfer BI Fast Dari BCA FERRY MIYIKO SITOPU 1750671272 Pesta Kuria GKPS Binjai", "kategori": "Transfer Bank", "jumlah": 2000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm9", "tanggal": "14 May 2026", "sumber": "Transfer dari BANK MANDIRI NANSI LOLITA SIHALOH 13300251914722", "kategori": "Transfer Bank", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm10", "tanggal": "14 May 2026", "sumber": "Transfer BI Fast Dari BPD SUMUT ERWIN PARULIAN SARAG 36002040040470", "kategori": "Transfer Bank", "jumlah": 500000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm11", "tanggal": "15 May 2026", "sumber": "Transfer BI Fast Dari BANK DIGITAL BCA Maretha Pafrika Huta 007905298814", "kategori": "Transfer Bank", "jumlah": 1500000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm12", "tanggal": "15 May 2026", "sumber": "Transfer dari BANK MANDIRI NI KT BUDI ARTINI 1450006054718 Support dr Pertamina AFT Ngurah", "kategori": "Transfer Bank", "jumlah": 1500000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm13", "tanggal": "15 May 2026", "sumber": "Transfer dari BANK MANDIRI HERTY PAULINA PURBA 1240006353065", "kategori": "Transfer Bank", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm14", "tanggal": "15 May 2026", "sumber": "Transfer dari BANK MANDIRI ARBANINGSIH 1750004512082 sponsorship", "kategori": "Transfer Bank", "jumlah": 5000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm15", "tanggal": "15 May 2026", "sumber": "Transfer BI Fast Dari BRI LATIFA ISNAINIAH MAS 005101026857539", "kategori": "Transfer Bank", "jumlah": 3000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm16", "tanggal": "16 May 2026", "sumber": "Transfer dari BANK MANDIRI HARAPAN PANGGABEAN 1050007717659", "kategori": "Transfer Bank", "jumlah": 5000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm17", "tanggal": "17 May 2026", "sumber": "Transfer dari Bank lain BANK BNI RUDI IRWANTO HAMONAN", "kategori": "Transfer Bank", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm18", "tanggal": "17 May 2026", "sumber": "Transfer dari BANK MANDIRI ERIKSON SIANIPAR 1030005744079 gkps kontribusi", "kategori": "Transfer Bank", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm19", "tanggal": "17 May 2026", "sumber": "Transfer dari BANK MANDIRI FREDEL MARDANI PURBA 1290000252623", "kategori": "Transfer Bank", "jumlah": 620000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm20", "tanggal": "17 May 2026", "sumber": "Transfer dari BANK MANDIRI RUDI SETIAWAN 1020005522765 Sy Rudi Setiawan", "kategori": "Transfer Bank", "jumlah": 2000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm21", "tanggal": "17 May 2026", "sumber": "Transfer dari BANK MANDIRI I KADEK YULI SASTRAWAN 1510002098561", "kategori": "Transfer Bank", "jumlah": 750000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm22", "tanggal": "17 May 2026", "sumber": "Transfer dari BANK MANDIRI ANITA MARTHA BR HUTA 1060013964807", "kategori": "Transfer Bank", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm23", "tanggal": "17 May 2026", "sumber": "Transfer BI Fast Dari BRI FRISKA EVI ERIANA SI 530401010550533", "kategori": "Transfer Bank", "jumlah": 2000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm24", "tanggal": "17 May 2026", "sumber": "Transfer BI Fast Dari BCA SUMARNI SITORUS 1750791987 Tt", "kategori": "Transfer Bank", "jumlah": 5000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm25", "tanggal": "17 May 2026", "sumber": "Transfer BI Fast Dari BRI FERIKSON DAMANIK 023801046551509", "kategori": "Transfer Bank", "jumlah": 2910000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm26", "tanggal": "18 May 2026", "sumber": "Transfer BI Fast Dari BCA FERNANDO HUTASOIT 0030852249 Sumbangan gereja GKPS binjai", "kategori": "Transfer Bank", "jumlah": 500000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm27", "tanggal": "18 May 2026", "sumber": "Transfer dari Bank lain BSI RIKA NOVITA 7240158935", "kategori": "Transfer Bank", "jumlah": 500000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm28", "tanggal": "19 May 2026", "sumber": "Transfer dari BANK MANDIRI WALMIN PURBA 1020096517799", "kategori": "Transfer Bank", "jumlah": 500000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm29", "tanggal": "19 May 2026", "sumber": "Transfer dari BANK MANDIRI RISMENI SARAGIH 1060011422485 jnj iman pembangunan GKPS Binjai", "kategori": "Transfer Bank", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm30", "tanggal": "20 May 2026", "sumber": "Transfer BI Fast Dari BRI GISTER SARTIKA SILA 539301043137535", "kategori": "Transfer Bank", "jumlah": 200000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}, {"id": "bm31", "tanggal": "20 May 2026", "sumber": "Transfer BI Fast Dari SEABANK INDONESIA RODE ARMAN GIRSANG 901788134255", "kategori": "Transfer Bank", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "masuk", "waktu": "2026-05-17"}], "keluar": [{"id": "bk1", "tanggal": "11 May 2026", "uraian": "Biaya transaksi bank Pembayaran Shopee Indonesia 896081361482667", "seksi": "Operasional", "jumlah": 1000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk2", "tanggal": "11 May 2026", "uraian": "Pembayaran Shopee Indonesia 896081361482667", "seksi": "Operasional", "jumlah": 62000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk3", "tanggal": "11 May 2026", "uraian": "Biaya transaksi bank Pembayaran Shopee Indonesia 896081361482667", "seksi": "Operasional", "jumlah": 1000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk4", "tanggal": "11 May 2026", "uraian": "Pembayaran Shopee Indonesia 896081361482667", "seksi": "Operasional", "jumlah": 71761, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk5", "tanggal": "11 May 2026", "uraian": "Biaya transaksi bank Pembayaran Shopee Indonesia 896081361482667", "seksi": "Operasional", "jumlah": 1000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk6", "tanggal": "11 May 2026", "uraian": "Pembayaran Shopee Indonesia 896081361482667", "seksi": "Operasional", "jumlah": 119642, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk7", "tanggal": "14 May 2026", "uraian": "Penarikan tunai di ATM BANK MANDIRI BJI PB LIANDY 01", "seksi": "Operasional", "jumlah": 2500000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk8", "tanggal": "14 May 2026", "uraian": "Penarikan tunai di ATM BANK MANDIRI BJI PB LIANDY 01", "seksi": "Operasional", "jumlah": 1400000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk9", "tanggal": "15 May 2026", "uraian": "Biaya transaksi bank Pembayaran Shopee Indonesia 896081361482667", "seksi": "Operasional", "jumlah": 1000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk10", "tanggal": "15 May 2026", "uraian": "Pembayaran Shopee Indonesia 896081361482667", "seksi": "Operasional", "jumlah": 42450, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk11", "tanggal": "15 May 2026", "uraian": "Pembayaran QR ke STASIUN BEBEK RESTORAN 605152075586", "seksi": "Operasional", "jumlah": 135000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk12", "tanggal": "16 May 2026", "uraian": "Pembayaran QR ke RM AMPERA PURNAMA JAYA 6051519443012", "seksi": "Operasional", "jumlah": 264000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk13", "tanggal": "16 May 2026", "uraian": "Pembayaran QR ke LUBIS BALON 6051519480395", "seksi": "Operasional", "jumlah": 145000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk14", "tanggal": "17 May 2026", "uraian": "Transfer ke BANK MANDIRI VERONICA SILITONGA 1060020338870", "seksi": "Operasional", "jumlah": 452480, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk15", "tanggal": "17 May 2026", "uraian": "Penarikan tunai tanpa kartu DI ATM MDN CB BINJAI CRM 081361482667", "seksi": "Operasional", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk16", "tanggal": "17 May 2026", "uraian": "Transfer ke BANK MANDIRI RAHEL DAMAYANTI GULO 1060013258838", "seksi": "Operasional", "jumlah": 5000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk17", "tanggal": "17 May 2026", "uraian": "Transfer ke BANK MANDIRI RAHEL DAMAYANTI GULO 1060013258838", "seksi": "Operasional", "jumlah": 9000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk18", "tanggal": "17 May 2026", "uraian": "Biaya transfer BI Fast", "seksi": "Operasional", "jumlah": 2500, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk19", "tanggal": "17 May 2026", "uraian": "Transfer BI Fast Ke BRI CHALVIN WIJAYA DAMAN 23801036470535 SOD gondang SOD suling", "seksi": "Operasional", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk20", "tanggal": "17 May 2026", "uraian": "Biaya transfer BI Fast", "seksi": "Operasional", "jumlah": 2500, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk21", "tanggal": "17 May 2026", "uraian": "Transfer BI Fast Ke BRI DODY PURBA 525301045707530", "seksi": "Operasional", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk22", "tanggal": "17 May 2026", "uraian": "Transfer ke BANK MANDIRI ELSI NOVITASARI BR M 1050013982253", "seksi": "Operasional", "jumlah": 1000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk23", "tanggal": "17 May 2026", "uraian": "Biaya transfer BI Fast", "seksi": "Operasional", "jumlah": 2500, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk24", "tanggal": "17 May 2026", "uraian": "Transfer BI Fast Ke BCA RODE ARMAN GIRSANG 1750713587", "seksi": "Operasional", "jumlah": 769000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk25", "tanggal": "18 May 2026", "uraian": "Biaya transfer BI Fast", "seksi": "Operasional", "jumlah": 2500, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk26", "tanggal": "18 May 2026", "uraian": "Transfer BI Fast Ke BCA FEBY SYLVIA BR SIMA 1751228991", "seksi": "Operasional", "jumlah": 5000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk27", "tanggal": "21 May 2026", "uraian": "Biaya transfer BI Fast", "seksi": "Operasional", "jumlah": 2500, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk28", "tanggal": "21 May 2026", "uraian": "Transfer BI Fast Ke BANK BNI MARTHINUS P HUTASOIT 1941666168", "seksi": "Operasional", "jumlah": 5000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk29", "tanggal": "23 May 2026", "uraian": "Biaya transfer BI Fast", "seksi": "Operasional", "jumlah": 2500, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}, {"id": "bk30", "tanggal": "23 May 2026", "uraian": "Transfer BI Fast Ke BANK BNI MARTHINUS P HUTASOIT 1941666168", "seksi": "Operasional", "jumlah": 10000000, "metode": "nontunai", "bank": "Bank Mandiri", "noref": "", "ket": "", "type": "keluar", "waktu": "2026-05-17", "status": "approved"}], "janji_iman": [{"no": 2, "nama": "Antonius Purba SE", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 3, "nama": "Budiman Purba", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 4, "nama": "Canri Damanik", "kontan": 100000, "transfer": 0, "bon": 0, "jumlah": 100000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 5, "nama": "CSt.Dimanson Purba", "kontan": 2000000, "transfer": 0, "bon": 0, "jumlah": 2000000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 6, "nama": "CSt.Eben Daniel Sipayung", "kontan": 2000000, "transfer": 0, "bon": 0, "jumlah": 2000000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 8, "nama": "David Sibarani,Arc", "kontan": 500000, "transfer": 0, "bon": 0, "jumlah": 500000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 9, "nama": "Drs. Esliben Purba", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 10, "nama": "Endi Hamobiv Purba", "kontan": 1000000, "transfer": 0, "bon": 0, "jumlah": 1000000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 12, "nama": "Guntur Irfandi Sinaga", "kontan": 0, "transfer": 0, "bon": 500000, "jumlah": 500000, "sektor": "Sektor I", "metode": "tunai", "status": "bon"}, {"no": 13, "nama": "Handy Sinaga", "kontan": 240000, "transfer": 0, "bon": 0, "jumlah": 240000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 16, "nama": "Heri Darma Simanjorang", "kontan": 0, "transfer": 0, "bon": 200000, "jumlah": 200000, "sektor": "Sektor I", "metode": "tunai", "status": "bon"}, {"no": 22, "nama": "Juliman Purba", "kontan": 160000, "transfer": 0, "bon": 0, "jumlah": 160000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 23, "nama": "Juna Barus", "kontan": 0, "transfer": 0, "bon": 300000, "jumlah": 300000, "sektor": "Sektor I", "metode": "tunai", "status": "bon"}, {"no": 24, "nama": "Juniapoh Saragih", "kontan": 250000, "transfer": 0, "bon": 0, "jumlah": 250000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 25, "nama": "Nopemdy Sinaga", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 30, "nama": "Ny.St.AB Purba br Saragih", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 32, "nama": "Ny.St.Japen Sinaga br Munthe", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 33, "nama": "Ny.Toni Panusunan Damanik", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 34, "nama": "Ny.Walkep Girsang br Haloho", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 36, "nama": "Pdt.Ito Belihar Purba S.Th,M.Sn", "kontan": 0, "transfer": 2000000, "bon": 0, "jumlah": 2000000, "sektor": "Sektor I", "metode": "nontunai", "status": "lunas"}, {"no": 38, "nama": "Robinson Simarmata", "kontan": 265000, "transfer": 0, "bon": 0, "jumlah": 265000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 39, "nama": "Rode Arman Girsang", "kontan": 0, "transfer": 0, "bon": 1000000, "jumlah": 1000000, "sektor": "Sektor I", "metode": "tunai", "status": "bon"}, {"no": 43, "nama": "Sehat Purba", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 45, "nama": "St. Anita Martha Hutagalung", "kontan": 0, "transfer": 1000000, "bon": 0, "jumlah": 1000000, "sektor": "Sektor I", "metode": "nontunai", "status": "lunas"}, {"no": 46, "nama": "St. Arpan Damanik", "kontan": 1000000, "transfer": 0, "bon": 0, "jumlah": 1000000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 47, "nama": "St. Julianus Kennedy Damanik + Gisbert Damanik", "kontan": 2200000, "transfer": 0, "bon": 0, "jumlah": 2200000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 49, "nama": "St.Em Janner Purba", "kontan": 0, "transfer": 0, "bon": 500000, "jumlah": 500000, "sektor": "Sektor I", "metode": "tunai", "status": "bon"}, {"no": 50, "nama": "Sudirman Saragih SH", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 52, "nama": "Sy. Heppy Munthe", "kontan": 250000, "transfer": 0, "bon": 0, "jumlah": 250000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 53, "nama": "Sy.Benny Leonard Saragih", "kontan": 100000, "transfer": 0, "bon": 0, "jumlah": 100000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 55, "nama": "Jonadi Saragih", "kontan": 1000000, "transfer": 0, "bon": 0, "jumlah": 1000000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 56, "nama": "Mia Saragih", "kontan": 0, "transfer": 0, "bon": 165000, "jumlah": 165000, "sektor": "Sektor I", "metode": "tunai", "status": "bon"}, {"no": 57, "nama": "Yeni F Saragih", "kontan": 160000, "transfer": 0, "bon": 0, "jumlah": 160000, "sektor": "Sektor I", "metode": "tunai", "status": "lunas"}, {"no": 1, "nama": "Alwinen Herdin Damanik", "kontan": 0, "transfer": 0, "bon": 200000, "jumlah": 200000, "sektor": "Sektor II", "metode": "tunai", "status": "bon"}, {"no": 2, "nama": "Andi Irwanda Sinaga", "kontan": 150000, "transfer": 0, "bon": 0, "jumlah": 150000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 3, "nama": "Antonius Situmeang", "kontan": 150000, "transfer": 0, "bon": 0, "jumlah": 150000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 4, "nama": "Bahtiar Lingga", "kontan": 0, "transfer": 250000, "bon": 0, "jumlah": 250000, "sektor": "Sektor II", "metode": "nontunai", "status": "lunas"}, {"no": 5, "nama": "Bayak Kita Perangin-angin", "kontan": 0, "transfer": 0, "bon": 300000, "jumlah": 300000, "sektor": "Sektor II", "metode": "tunai", "status": "bon"}, {"no": 7, "nama": "Bosma Jules Purba", "kontan": 0, "transfer": 150000, "bon": 0, "jumlah": 150000, "sektor": "Sektor II", "metode": "nontunai", "status": "lunas"}, {"no": 8, "nama": "Boy Bronson Saragih", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 10, "nama": "CSt.Ferikson Damanik", "kontan": 1500000, "transfer": 0, "bon": 0, "jumlah": 1500000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 11, "nama": "Darwin Girsang", "kontan": 1000000, "transfer": 0, "bon": 0, "jumlah": 1000000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 13, "nama": "Drs. Jackson Haloho", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 14, "nama": "Firnando Purba", "kontan": 500000, "transfer": 0, "bon": 0, "jumlah": 500000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 16, "nama": "Horaman Purba", "kontan": 50000, "transfer": 0, "bon": 0, "jumlah": 50000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 17, "nama": "Ing. St.Syahmauli br Sipayung", "kontan": 0, "transfer": 500000, "bon": 0, "jumlah": 500000, "sektor": "Sektor II", "metode": "nontunai", "status": "lunas"}, {"no": 18, "nama": "Ing.Arina Fransiska br Sinaga", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 20, "nama": "Jahongman Sitopu SH", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 22, "nama": "Jeslan Simorangkir", "kontan": 400000, "transfer": 0, "bon": 0, "jumlah": 400000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 24, "nama": "Jhonro Musa Agus Sitopu SH", "kontan": 0, "transfer": 560000, "bon": 0, "jumlah": 560000, "sektor": "Sektor II", "metode": "nontunai", "status": "lunas"}, {"no": 26, "nama": "Johandri Purba", "kontan": 0, "transfer": 0, "bon": 200000, "jumlah": 200000, "sektor": "Sektor II", "metode": "tunai", "status": "bon"}, {"no": 27, "nama": "Jonriaman Saragih", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 29, "nama": "Kawal Purba", "kontan": 100000, "transfer": 0, "bon": 0, "jumlah": 100000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 31, "nama": "Mak Theo br Saragih", "kontan": 0, "transfer": 200000, "bon": 0, "jumlah": 200000, "sektor": "Sektor II", "metode": "nontunai", "status": "lunas"}, {"no": 32, "nama": "Marjan Sipayung", "kontan": 0, "transfer": 0, "bon": 150000, "jumlah": 150000, "sektor": "Sektor II", "metode": "tunai", "status": "bon"}, {"no": 33, "nama": "Ny.Deman Purba br Sipayung", "kontan": 0, "transfer": 50000, "bon": 0, "jumlah": 50000, "sektor": "Sektor II", "metode": "nontunai", "status": "lunas"}, {"no": 34, "nama": "Ny.Jasianus Saragih", "kontan": 0, "transfer": 0, "bon": 150000, "jumlah": 150000, "sektor": "Sektor II", "metode": "tunai", "status": "bon"}, {"no": 35, "nama": "Ny.St.Drs Boynes Haloho", "kontan": 0, "transfer": 1000000, "bon": 0, "jumlah": 1000000, "sektor": "Sektor II", "metode": "nontunai", "status": "lunas"}, {"no": 39, "nama": "Pdt.Almer Trivendi Purba STh,MSi", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 40, "nama": "Perlaban Karo-karo", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 41, "nama": "Ridho Masyudi  Sinaga", "kontan": 0, "transfer": 100000, "bon": 0, "jumlah": 100000, "sektor": "Sektor II", "metode": "nontunai", "status": "lunas"}, {"no": 42, "nama": "Selamat Pinem", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 43, "nama": "St. Drs. Jansimon Purba", "kontan": 0, "transfer": 0, "bon": 500000, "jumlah": 500000, "sektor": "Sektor II", "metode": "tunai", "status": "bon"}, {"no": 44, "nama": "St. Heldiman Purba", "kontan": 150000, "transfer": 0, "bon": 0, "jumlah": 150000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 45, "nama": "St. Hotmida Purba + Martin Sinaga", "kontan": 0, "transfer": 0, "bon": 3000000, "jumlah": 3000000, "sektor": "Sektor II", "metode": "tunai", "status": "bon"}, {"no": 46, "nama": "St. Juniarman Damanik SH", "kontan": 120000, "transfer": 0, "bon": 0, "jumlah": 120000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 47, "nama": "St. Ondo Roni Artani Sinaga", "kontan": 0, "transfer": 0, "bon": 300000, "jumlah": 300000, "sektor": "Sektor II", "metode": "tunai", "status": "bon"}, {"no": 48, "nama": "St. Robinson Purba", "kontan": 0, "transfer": 100000, "bon": 0, "jumlah": 100000, "sektor": "Sektor II", "metode": "nontunai", "status": "lunas"}, {"no": 49, "nama": "St. Tony Virgos Girsang SPd + Reyna", "kontan": 1300000, "transfer": 0, "bon": 0, "jumlah": 1300000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 50, "nama": "St. Waldemar Girsang", "kontan": 3000000, "transfer": 0, "bon": 0, "jumlah": 3000000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 51, "nama": "Warisman Tondang", "kontan": 0, "transfer": 0, "bon": 100000, "jumlah": 100000, "sektor": "Sektor II", "metode": "tunai", "status": "bon"}, {"no": 52, "nama": "Yopi Fernando Purba", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 53, "nama": "Yossi Sinaga", "kontan": 0, "transfer": 0, "bon": 1000000, "jumlah": 1000000, "sektor": "Sektor II", "metode": "tunai", "status": "bon"}, {"no": 54, "nama": "Andre Simatupang", "kontan": 400000, "transfer": 0, "bon": 0, "jumlah": 400000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 55, "nama": "Andi lazardo girsang", "kontan": 500000, "transfer": 0, "bon": 0, "jumlah": 500000, "sektor": "Sektor II", "metode": "tunai", "status": "lunas"}, {"no": 3, "nama": "Brinatha Imanuel Sembiring", "kontan": 500000, "transfer": 0, "bon": 0, "jumlah": 500000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 4, "nama": "Budi Chandra Damanik", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 5, "nama": "Budiaman Purba", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 7, "nama": "CSt.Posman Saragih", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 8, "nama": "Darma Wijaya Pinem", "kontan": 100000, "transfer": 0, "bon": 0, "jumlah": 100000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 9, "nama": "Drs. Jan Sudirman Saragih", "kontan": 360000, "transfer": 0, "bon": 0, "jumlah": 360000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 11, "nama": "Elvis Ferdinandus Saragih", "kontan": 2000000, "transfer": 0, "bon": 0, "jumlah": 2000000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 13, "nama": "Fernan Siallagan", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 14, "nama": "Gilbert Agustinus Sinaga SH", "kontan": 600000, "transfer": 0, "bon": 0, "jumlah": 600000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 15, "nama": "Halorensius Haloho", "kontan": 100000, "transfer": 0, "bon": 0, "jumlah": 100000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 16, "nama": "Henri Julianto Dmk/PW", "kontan": 630000, "transfer": 0, "bon": 0, "jumlah": 630000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 17, "nama": "Imanuel Always Saragih", "kontan": 0, "transfer": 0, "bon": 200000, "jumlah": 200000, "sektor": "Sektor III", "metode": "tunai", "status": "bon"}, {"no": 20, "nama": "Ing.CSt.Mery Suzanna br Purba", "kontan": 400000, "transfer": 0, "bon": 0, "jumlah": 400000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 22, "nama": "Ing.St.Em.Lerida Sipayung", "kontan": 700000, "transfer": 0, "bon": 0, "jumlah": 700000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 23, "nama": "Ing.St.Em.Suryani Surbakti", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 24, "nama": "Ir. Berman Lumban Gaol", "kontan": 0, "transfer": 0, "bon": 2000000, "jumlah": 2000000, "sektor": "Sektor III", "metode": "tunai", "status": "bon"}, {"no": 29, "nama": "Jusri Marlan H Sinaga", "kontan": 250000, "transfer": 0, "bon": 0, "jumlah": 250000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 30, "nama": "Lintong Samosir", "kontan": 0, "transfer": 0, "bon": 500000, "jumlah": 500000, "sektor": "Sektor III", "metode": "tunai", "status": "bon"}, {"no": 31, "nama": "Marthinus Hutasoit", "kontan": 0, "transfer": 0, "bon": 5000000, "jumlah": 5000000, "sektor": "Sektor III", "metode": "tunai", "status": "bon"}, {"no": 32, "nama": "Nurdin Togar H Purba", "kontan": 500000, "transfer": 0, "bon": 0, "jumlah": 500000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 33, "nama": "Ny St. Barmen Sinaga BSc", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 34, "nama": "Ny. Sanga Doamen Pardede", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 35, "nama": "Ny.Albiner Silalahi br Damanik", "kontan": 400000, "transfer": 0, "bon": 0, "jumlah": 400000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 36, "nama": "Ny.Berlin Sembiring br Damanik", "kontan": 500000, "transfer": 0, "bon": 0, "jumlah": 500000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 37, "nama": "Ny.Jahoram Sinaga br Purba", "kontan": 250000, "transfer": 0, "bon": 0, "jumlah": 250000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 38, "nama": "Ny.Jansamen Saragih br Purba", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 39, "nama": "Ny.K Damanik br Simanjuntak", "kontan": 500000, "transfer": 0, "bon": 0, "jumlah": 500000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 40, "nama": "Ny.Parulian Dmk br Sitorus+Reinhard+Rido+Rolando", "kontan": 0, "transfer": 5000000, "bon": 0, "jumlah": 5000000, "sektor": "Sektor III", "metode": "nontunai", "status": "lunas"}, {"no": 44, "nama": "Ny.St.Daniel Purba br Saragih", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 45, "nama": "Ny.St.JB Sinaga br Damanik", "kontan": 400000, "transfer": 0, "bon": 0, "jumlah": 400000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 46, "nama": "Ny.St.Jintaralam Purba br Ht.Gaol", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 48, "nama": "Okta Gabriel Sugeng Purba", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 49, "nama": "Ralinsen Saragih", "kontan": 1500000, "transfer": 0, "bon": 0, "jumlah": 1500000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 55, "nama": "Roni Sembiring", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 56, "nama": "Sehat Saragih", "kontan": 500000, "transfer": 0, "bon": 0, "jumlah": 500000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 57, "nama": "Senny Sipayung", "kontan": 120000, "transfer": 0, "bon": 0, "jumlah": 120000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 58, "nama": "Sirman Purba", "kontan": 120000, "transfer": 0, "bon": 0, "jumlah": 120000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 59, "nama": "St. Adek Rusli Sinaga SH", "kontan": 0, "transfer": 0, "bon": 2500000, "jumlah": 2500000, "sektor": "Sektor III", "metode": "tunai", "status": "bon"}, {"no": 60, "nama": "St. Arihta Sinaga", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 61, "nama": "St. Hotlan Damanik", "kontan": 0, "transfer": 0, "bon": 500000, "jumlah": 500000, "sektor": "Sektor III", "metode": "tunai", "status": "bon"}, {"no": 62, "nama": "St. Jahorman Damanik", "kontan": 400000, "transfer": 0, "bon": 0, "jumlah": 400000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 63, "nama": "St. Marojahan Silalahi", "kontan": 200000, "transfer": 0, "bon": 0, "jumlah": 200000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 64, "nama": "St. Ramanson Damanik", "kontan": 0, "transfer": 0, "bon": 200000, "jumlah": 200000, "sektor": "Sektor III", "metode": "tunai", "status": "bon"}, {"no": 65, "nama": "St. Sozisokhi Gulo", "kontan": 0, "transfer": 0, "bon": 1263000, "jumlah": 1263000, "sektor": "Sektor III", "metode": "tunai", "status": "bon"}, {"no": 66, "nama": "St.Em. Drs Sarmulia Saragih", "kontan": 160000, "transfer": 0, "bon": 0, "jumlah": 160000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 67, "nama": "St.Em. Mataruddin Saragih", "kontan": 1500000, "transfer": 0, "bon": 0, "jumlah": 1500000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 68, "nama": "Sy.Deni Parlindungan Munthe", "kontan": 1263000, "transfer": 0, "bon": 0, "jumlah": 1263000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 69, "nama": "Sy.Hendra Gunawan Saragih", "kontan": 0, "transfer": 0, "bon": 500000, "jumlah": 500000, "sektor": "Sektor III", "metode": "tunai", "status": "bon"}, {"no": 71, "nama": "Wilson Siahaan", "kontan": 300000, "transfer": 0, "bon": 0, "jumlah": 300000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 72, "nama": "KEL GULTOM BR DAMANIK MEDAN", "kontan": 2000000, "transfer": 0, "bon": 0, "jumlah": 2000000, "sektor": "Sektor III", "metode": "tunai", "status": "lunas"}, {"no": 73, "nama": "Christyka Simbolon", "kontan": 0, "transfer": 0, "bon": 163000, "jumlah": 163000, "sektor": "Sektor III", "metode": "tunai", "status": "bon"}], "rekap_ji": [{"no": 1, "kategori": "Janji Iman I", "kontan": 13725000, "transfer": 3000000, "bon": 2665000, "total": 19390000}, {"no": 2, "kategori": "Janji Iman II", "kontan": 11420000, "transfer": 2910000, "bon": 5900000, "total": 20230000}, {"no": 3, "kategori": "Janji Iman III", "kontan": 19653000, "transfer": 5000000, "bon": 12826000, "total": 37479000}, {"no": 4, "kategori": "tor tor Sektor I", "kontan": 715000, "transfer": 0, "bon": 0, "total": 715000}, {"no": 5, "kategori": "tor tor Sektor II", "kontan": 510000, "transfer": 0, "bon": 0, "total": 510000}, {"no": 6, "kategori": "tor tor Sektor III", "kontan": 590000, "transfer": 0, "bon": 0, "total": 590000}, {"no": 7, "kategori": "Sumbang Lagu Pdt", "kontan": 620000, "transfer": 0, "bon": 0, "total": 620000}, {"no": 8, "kategori": "Kokarde", "kontan": 669000, "transfer": 0, "bon": 0, "total": 669000}, {"no": 9, "kategori": "Boras Tenger", "kontan": 1712000, "transfer": 0, "bon": 0, "total": 1712000}], "pending": []};
+if(!DATA.pending)    DATA.pending=[];
+if(!DATA.janji_iman) DATA.janji_iman=[];
+if(!DATA.kegiatan)   DATA.kegiatan=[];
+
+const RAB = [{"id":"r1","kategori":"RAB I - Acara Kebaktian","uraian":"Transport Full Timer - Parambilan","seksi":"Sie Acara / Hiburan","anggaran":1000000},{"id":"r2","kategori":"RAB I - Acara Kebaktian","uraian":"Transport Full Timer - Agenda","seksi":"Sie Acara / Hiburan","anggaran":500000},{"id":"r3","kategori":"RAB I - Acara Kebaktian","uraian":"Transport Full Timer - Keyboard","seksi":"Sie Acara / Hiburan","anggaran":1000000},{"id":"r4","kategori":"RAB I - Acara Kebaktian","uraian":"Transport Full Timer - Tagading","seksi":"Sie Acara / Hiburan","anggaran":1000000},{"id":"r5","kategori":"RAB I - Acara Kebaktian","uraian":"Transport Full Timer - Saxsophones","seksi":"Sie Acara / Hiburan","anggaran":1500000},{"id":"r6","kategori":"RAB II - Pengadaan Alat dan Multimedia","uraian":"TV 65 inci merk Samsung (2 unit)","seksi":"Pengadaan Sound System / TV","anggaran":24000000},{"id":"r7","kategori":"RAB II - Pengadaan Alat dan Multimedia","uraian":"Speaker Aktif 15 inci merk Huper (4 unit)","seksi":"Pengadaan Sound System / TV","anggaran":24000000},{"id":"r8","kategori":"RAB II - Pengadaan Alat dan Multimedia","uraian":"Bongkar Pasang Sound System dan Kabel","seksi":"Pengadaan Sound System / TV","anggaran":6000000},{"id":"r9","kategori":"RAB II - Pengadaan Alat dan Multimedia","uraian":"Pemindahan stand alat musik dan pemain musik","seksi":"Pengadaan Alat Musik","anggaran":2000000},{"id":"r10","kategori":"RAB II - Pengadaan Alat dan Multimedia","uraian":"Pembelian alat musik (Drum, gitar, saxophone, biola dll)","seksi":"Pengadaan Alat Musik","anggaran":25000000},{"id":"r11","kategori":"RAB II - Seksi Kegiatan","uraian":"Dana 10 persen ke BDS sisa biaya pesta","seksi":"Operasional / Lain-lain","anggaran":10000000},{"id":"r12","kategori":"RAB II - Seksi Kegiatan","uraian":"Dana ke Parhorja Emeritus 2 orang","seksi":"Operasional / Lain-lain","anggaran":14000000},{"id":"r13","kategori":"RAB II - Seksi Kegiatan","uraian":"Biaya tak terduga dan operasional perlombaan","seksi":"Operasional / Lain-lain","anggaran":7500000},{"id":"r14","kategori":"RAB II - Seksi Kegiatan","uraian":"Seksi Perlombaan hadiah dan peralatan","seksi":"Sie Perlombaan","anggaran":8865000},{"id":"r15","kategori":"RAB II - Seksi Kegiatan","uraian":"Seksi Kesehatan","seksi":"Sie Kesehatan","anggaran":2000000},{"id":"r16","kategori":"RAB II - Seksi Kegiatan","uraian":"Seksi Konsumsi","seksi":"Sie Konsumsi","anggaran":15000000},{"id":"r17","kategori":"RAB II - Seksi Kegiatan","uraian":"Seksi Lucky Draw","seksi":"Operasional / Lain-lain","anggaran":4000000},{"id":"r18","kategori":"RAB II - Seksi Kegiatan","uraian":"Biaya tak terduga dan operasional cadangan","seksi":"Operasional / Lain-lain","anggaran":7500000}];
+
+// RAB realisasi state (status + alasan per item)
+let RAB_STATE = {};
+
+// Patch JI
+DATA.janji_iman=DATA.janji_iman.map(x=>{
+  if(!x.status){
+    if(x.bon>0&&x.kontan===0&&x.transfer===0) x.status='bon';
+    else if(x.transfer>0) x.status='lunas-transfer';
+    else x.status='lunas-tunai';
+  }
+  if(!x.cicilan) x.cicilan=[];
+  return x;
+});
+
+let chartInst=null,currentChart='donut',delTarget=null,jiFilter='semua',rabFilter='semua';
+let printType='masuk';
+
+// ═══ INIT ═══
+window.onload=function(){
+  const saved=localStorage.getItem('gkps_v4');
+  if(saved){try{
+    const s=JSON.parse(saved);
+    ['masuk','keluar','janji_iman','kegiatan'].forEach(k=>{if(s[k+'_new'])DATA[k]=[...DATA[k],...s[k+'_new']];});
+    if(s.cicilan_patch) s.cicilan_patch.forEach(p=>{const ji=DATA.janji_iman.find(x=>x.id===p.ji_id);if(ji){if(!ji.cicilan)ji.cicilan=[];ji.cicilan.push(p.cicil);}});
+    if(s.rab_state) RAB_STATE={...s.rab_state};
+    if(s.full_timer) DATA.full_timer={...s.full_timer};
+  }catch(e){}}
+  const today=new Date().toISOString().split('T')[0];
+  ['m-tgl','k-tgl','ji-tgl','sk-tgl','cicil-tgl','print-dari','print-sampai'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=today;});
+  // Default print range: bulan ini
+  const d=new Date();
+  const m1=new Date(d.getFullYear(),d.getMonth(),1).toISOString().split('T')[0];
+  const m2=new Date(d.getFullYear(),d.getMonth()+1,0).toISOString().split('T')[0];
+  document.getElementById('print-dari').value=m1;
+  document.getElementById('print-sampai').value=m2;
+
+  updateAll();
+  startAutoSync();
+};
+
+// ═══ SYNC ENGINE ═══
+let syncTimer=null, lastSync=0, isSyncing=false;
+
+function saveLocal(){
+  try{
+    if(!DATA.full_timer)DATA.full_timer={};
+  const masuk_new=DATA.masuk.filter(x=>x.id.startsWith('new'));
+    const keluar_new=DATA.keluar.filter(x=>x.id.startsWith('new'));
+    const janji_new=DATA.janji_iman.filter(x=>x.id&&x.id.startsWith('new'));
+    const kegiatan_new=DATA.kegiatan.filter(x=>x.id&&x.id.startsWith('new'));
+    const cicilan_patch=[];
+    DATA.janji_iman.forEach(ji=>{
+      if(ji.id&&!ji.id.startsWith('new')&&ji.cicilan&&ji.cicilan.length)
+        ji.cicilan.forEach(c=>cicilan_patch.push({ji_id:ji.id,cicil:c}));
+    });
+    localStorage.setItem('gkps_v4',JSON.stringify({masuk_new,keluar_new,janji_new,kegiatan_new,cicilan_patch,rab_state:RAB_STATE,full_timer:DATA.full_timer}));
+  }catch(e){}
+}
+
+function setSyncStatus(status,text){
+  const dot=document.getElementById('syncDot');
+  const txt=document.getElementById('syncTxt');
+  if(!dot||!txt) return;
+  dot.className='sync-dot '+status;
+  txt.textContent=text;
+}
+
+async function pullFromGAS(){
+  if(!CFG.GAS_URL||isSyncing) return;
+  isSyncing=true; setSyncStatus('syncing','Sync...');
+  try{
+    const res=await fetch(CFG.GAS_URL+'?action=getAll',{cache:'no-store'});
+    const d=await res.json();
+    if(d.error) throw new Error(d.error);
+
+    // Merge: GAS data replaces local, new local items preserved
+    const localNewM  = DATA.masuk.filter(x=>x.id.startsWith('new'));
+    const localNewK  = DATA.keluar.filter(x=>x.id.startsWith('new'));
+    const localNewJ  = DATA.janji_iman.filter(x=>x.id&&x.id.startsWith('new'));
+    const localNewKg = DATA.kegiatan.filter(x=>x.id&&x.id.startsWith('new'));
+
+    if(d.masuk)    DATA.masuk    = [...(d.masuk||[]),    ...localNewM].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
+    if(d.keluar)   DATA.keluar   = [...(d.keluar||[]),   ...localNewK].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
+    if(d.janji)    DATA.janji_iman = [...(d.janji||[]).map(x=>{if(!x.cicilan)x.cicilan=[];return x;}), ...localNewJ].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
+    if(d.kegiatan) DATA.kegiatan = [...(d.kegiatan||[]), ...localNewKg].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
+    if(d.rab)      RAB_STATE     = {...d.rab, ...RAB_STATE};
+
+    lastSync=Date.now();
+    const timeStr=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('','Sync '+ timeStr);
+    updateAll();
+    return true;
+  }catch(err){
+    setSyncStatus('error','Gagal sync');
+    console.warn('Pull error:',err);
+    return false;
+  } finally{ isSyncing=false; }
+}
+
+async function pushToGAS(action, payload){
+  if(!CFG.GAS_URL) return;
+  setSyncStatus('syncing','Menyimpan...');
+  try{
+    const res=await fetch(CFG.GAS_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action,...payload})
+    });
+    const d=await res.json();
+    if(!d.ok) throw new Error(d.error||'Push failed');
+    setSyncStatus('','Tersimpan ✓');
+    return true;
+  }catch(err){
+    setSyncStatus('error','Simpan gagal');
+    console.warn('Push error:',err);
+    return false;
+  }
+}
+
+function manualSync(){
+  if(CFG.GAS_URL) pullFromGAS();
+  else toast('Isi GAS_URL dulu di config!','e');
+}
+
+function startAutoSync(){
+  if(!CFG.GAS_URL){ setSyncStatus('offline','Offline'); return; }
+  setSyncStatus('','Menghubungkan...');
+  pullFromGAS();
+  // Auto pull tiap 30 detik
+  setInterval(()=>{ if(Date.now()-lastSync>25000) pullFromGAS(); }, 30000);
+}
+
+function updateAll(){updateUI();loadMasukList();loadKeluarList();loadLPJ();loadRABMini();loadFTCard();
+  if(document.getElementById('sec-janji').classList.contains('active'))loadJI();
+  if(document.getElementById('sec-seksi').classList.contains('active'))loadSeksi();
+  if(document.getElementById('sec-rab').classList.contains('active'))loadRAB();
+}
+
+// ═══ TABS ═══
+function sw(tab,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+tab).classList.add('active');
+  btn.classList.add('active');
+  if(tab==='janji') loadJI();
+  if(tab==='seksi'){ loadSeksi(); loadFTCard(); }
+  if(tab==='rab')   loadRAB();
+  if(tab==='lpj')   loadLPJ();
+  if(tab==='dashboard') setTimeout(()=>renderChart(currentChart),80);
+}
+
+// ═══ UI UPDATE ═══
+function updateUI(){
+  const tM=DATA.masuk.reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const tK=DATA.keluar.reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const saldo=tM-tK;
+  const jiAll=DATA.janji_iman.reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const jiBon=DATA.janji_iman.filter(x=>x.status==='bon').length;
+  const rabTotal=RAB.reduce((a,b)=>a+b.anggaran,0);
+  const rabPct=Math.round(tK/rabTotal*100);
+
+  document.getElementById('d-saldo').textContent=rp(saldo);
+  document.getElementById('d-status').textContent=saldo>0?'✅ Surplus':saldo<0?'❌ Defisit':'⚖️ Balance';
+  document.getElementById('d-masuk').textContent=rp(tM);
+  document.getElementById('d-masuk-n').textContent=DATA.masuk.length+' trx';
+  document.getElementById('d-keluar').textContent=rp(tK);
+  document.getElementById('d-keluar-n').textContent=DATA.keluar.length+' trx';
+  document.getElementById('d-rab-pct').textContent=rabPct+'% terserap';
+  document.getElementById('d-ji').textContent=rp(jiAll);
+  document.getElementById('d-ji-sub').textContent=jiBon+' bon';
+  const mT=DATA.masuk.filter(x=>x.metode!=='nontunai').reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const mNT=DATA.masuk.filter(x=>x.metode==='nontunai').reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const kT=DATA.keluar.filter(x=>x.metode!=='nontunai').reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const kNT=DATA.keluar.filter(x=>x.metode==='nontunai').reduce((a,b)=>a+Number(b.jumlah||0),0);
+  document.getElementById('d-mt').textContent=rp(mT);
+  document.getElementById('d-mnt').textContent=rp(mNT);
+  document.getElementById('d-kt').textContent=rp(kT);
+  document.getElementById('d-knt').textContent=rp(kNT);
+  const recent=[...DATA.masuk.map(m=>({...m,type:'masuk'})),...DATA.keluar.map(k=>({...k,type:'keluar'}))].sort((a,b)=>new Date(b.waktu||b.tanggal)-new Date(a.waktu||a.tanggal)).slice(0,5);
+  document.getElementById('d-recent').innerHTML=recent.length?recent.map(t=>trxItem(t,'dashboard')).join(''):'<div class="empty"><div class="ei">📭</div><p>Belum ada transaksi</p></div>';
+  renderChart(currentChart);
+}
+
+// ═══ RAB MINI di DASHBOARD ═══
+function loadRABMini(){
+  const tK=DATA.keluar.reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const rabTotal=RAB.reduce((a,b)=>a+b.anggaran,0);
+  // Group by kategori
+  const cats=[...new Set(RAB.map(x=>x.kategori))];
+  const el=document.getElementById('d-rab-bars');
+  if(!el)return;
+  el.innerHTML=cats.map(cat=>{
+    const rabCat=RAB.filter(x=>x.kategori===cat).reduce((a,b)=>a+b.anggaran,0);
+    const realCat=DATA.keluar.filter(x=>RAB.filter(r=>r.kategori===cat).map(r=>r.seksi).includes(x.seksi)).reduce((a,b)=>a+Number(b.jumlah||0),0);
+    const pct=Math.min(100,Math.round(realCat/rabCat*100));
+    const cls=pct>=100?'rd':pct>=80?'gd':'gn';
+    return `<div class="pb-wrap" style="margin-bottom:8px">
+      <div class="pb-lbl"><span style="font-size:11px">${cat}</span><span style="font-size:10px">${rp(realCat)} / ${rp(rabCat)} (${pct}%)</span></div>
+      <div class="pb-bar"><div class="pb-fill ${cls}" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+// ═══ RAB vs REALISASI TAB ═══
+function loadRAB(){
+  const tK=DATA.keluar.reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const rabTotal=RAB.reduce((a,b)=>a+b.anggaran,0);
+  const rabDone=RAB.filter(r=>(RAB_STATE[r.id]||{}).checked).length;
+  document.getElementById('rab-real-total').textContent=rp(tK);
+  document.getElementById('rab-selisih').textContent=rp(rabTotal-tK);
+  document.getElementById('rab-pct-done').textContent=rabDone+' / '+RAB.length;
+
+  let items=[...RAB];
+  if(rabFilter==='ok') items=items.filter(r=>(RAB_STATE[r.id]||{}).checked);
+  if(rabFilter==='belum') items=items.filter(r=>!(RAB_STATE[r.id]||{}).checked);
+
+  // Group by kategori
+  const cats=[...new Set(items.map(x=>x.kategori))];
+  const el=document.getElementById('rab-list');
+  el.innerHTML=cats.map(cat=>{
+    const catItems=items.filter(x=>x.kategori===cat);
+    const catRAB=catItems.reduce((a,b)=>a+b.anggaran,0);
+    return `<div style="margin-bottom:14px">
+      <div style="font-size:11px;font-weight:700;color:var(--navy);background:var(--bl);padding:6px 10px;border-radius:8px;margin-bottom:6px">${cat} — Anggaran: ${rp(catRAB)}</div>
+      ${catItems.map(r=>{
+        const state=RAB_STATE[r.id]||{checked:false,alasan:''};
+        const real=getRABRealisasi(r);
+        const selisih=real-r.anggaran;
+        const pct=r.anggaran>0?Math.round(real/r.anggaran*100):0;
+        return `<div class="rab-row" id="rabrow-${r.id}">
+          <div class="rab-top">
+            <div class="rab-nama">${r.uraian}</div>
+            <div class="rab-status" title="${state.checked?'Terealisasi':'Belum terealisasi'}">
+              <label style="cursor:pointer;display:flex;align-items:center;gap:4px">
+                <input type="checkbox" ${state.checked?'checked':''} onchange="toggleRAB('${r.id}',this.checked)" style="width:18px;height:18px;cursor:pointer;accent-color:var(--green)"/>
+                <span style="font-size:11px;color:${state.checked?'var(--green)':'var(--muted)'};font-weight:600">${state.checked?'✅ Ya':'❌ Belum'}</span>
+              </label>
+            </div>
+          </div>
+          <div class="rab-nums">
+            <div class="rab-num" style="background:var(--bl)"><div class="nlbl">Anggaran RAB</div><div class="nval" style="color:var(--navy)">${rp(r.anggaran)}</div></div>
+            <div class="rab-num" style="background:${real>0?'var(--gl)':'var(--bg)'}"><div class="nlbl">Realisasi</div><div class="nval" style="color:${real>0?'var(--green)':'var(--muted)'}">${real>0?rp(real):'Belum ada'}</div></div>
+            <div class="rab-num" style="background:${selisih<0?'var(--rl)':selisih===0?'var(--gl)':'#fff8e1'}"><div class="nlbl">Selisih</div><div class="nval" style="color:${selisih<0?'var(--red)':selisih===0?'var(--green)':'#b8860b'}">${selisih>0?'+':''}${rp(selisih)}</div></div>
+            <div class="rab-num" style="background:var(--bg)"><div class="nlbl">Serapan</div><div class="nval" style="color:${pct>=100?'var(--green)':pct>=50?'#b8860b':'var(--muted)'}">${pct}%</div></div>
+          </div>
+          ${!state.checked?`<div class="rab-alasan">
+            <label style="font-size:10px;font-weight:600;color:var(--muted);margin-bottom:4px;display:block">Alasan belum terealisasi (opsional):</label>
+            <textarea placeholder="Tuliskan alasan, kendala, atau rencana tindak lanjut..." oninput="simpanAlasanRAB('${r.id}',this.value)">${state.alasan||''}</textarea>
+          </div>`:''}
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+}
+
+function getRABRealisasi(r){
+  return DATA.keluar.filter(k=>k.seksi===r.seksi||(r.uraian&&k.uraian&&k.uraian.toLowerCase().includes(r.uraian.toLowerCase().slice(0,10)))).reduce((a,b)=>a+Number(b.jumlah||0),0);
+}
+function toggleRAB(id,checked){
+  if(!RAB_STATE[id]) RAB_STATE[id]={checked:false,alasan:''};
+  RAB_STATE[id].checked=checked;
+  saveLocal(); loadRAB(); updateRABSummary();
+  pushToGAS('updateRAB',{id,checked,alasan:(RAB_STATE[id]||{}).alasan||''});
+  toast(checked?'✅ Ditandai terealisasi':'⬜ Ditandai belum','s');
+}
+function simpanAlasanRAB(id,val){
+  if(!RAB_STATE[id]) RAB_STATE[id]={checked:false,alasan:''};
+  RAB_STATE[id].alasan=val;
+  saveLocal();
+}
+function filterRAB(f){rabFilter=f;loadRAB();}
+function updateRABSummary(){
+  const rabDone=RAB.filter(r=>(RAB_STATE[r.id]||{}).checked).length;
+  document.getElementById('rab-pct-done').textContent=rabDone+' / '+RAB.length;
+}
+
+// ═══ CHART ═══
+function setChart(t){currentChart=t;renderChart(t);}
+function renderChart(type){
+  const ctx=document.getElementById('mainChart');if(!ctx)return;
+  if(chartInst){chartInst.destroy();chartInst=null;}
+  const tM=DATA.masuk.reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const tK=DATA.keluar.reduce((a,b)=>a+Number(b.jumlah||0),0);
+  let cfg={};
+  if(type==='donut'){
+    const jiL=DATA.janji_iman.filter(x=>x.status!=='bon').reduce((a,b)=>a+Number(b.jumlah||0),0);
+    const jiB=DATA.janji_iman.filter(x=>x.status==='bon').reduce((a,b)=>a+Number(b.jumlah||0),0);
+    cfg={type:'doughnut',data:{labels:['Pemasukan','Pengeluaran','JI Lunas','JI Bon'],datasets:[{data:[tM,tK,jiL,jiB],backgroundColor:['#1a7a4a','#c0392b','#c9a227','#7a8299'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:8}}}}};
+  } else if(type==='bar'){
+    const mG={},kG={};
+    DATA.masuk.forEach(x=>{const m=String(x.tanggal||'').slice(0,7)||'?';mG[m]=(mG[m]||0)+Number(x.jumlah||0);});
+    DATA.keluar.forEach(x=>{const m=String(x.tanggal||'').slice(0,7)||'?';kG[m]=(kG[m]||0)+Number(x.jumlah||0);});
+    const lb=[...new Set([...Object.keys(mG),...Object.keys(kG)])].sort();
+    cfg={type:'bar',data:{labels:lb,datasets:[{label:'Masuk',data:lb.map(l=>mG[l]||0),backgroundColor:'rgba(26,122,74,.75)'},{label:'Keluar',data:lb.map(l=>kG[l]||0),backgroundColor:'rgba(192,57,43,.75)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:v=>v>=1e6?(v/1e6).toFixed(0)+'Jt':v}}}}};
+  } else if(type==='ji'){
+    const S=['Sektor I','Sektor II','Sektor III'];
+    const L=S.map(s=>DATA.janji_iman.filter(x=>x.sektor===s&&x.status!=='bon').reduce((a,b)=>a+Number(b.jumlah||0),0));
+    const B=S.map(s=>DATA.janji_iman.filter(x=>x.sektor===s&&x.status==='bon').reduce((a,b)=>a+Number(b.jumlah||0),0));
+    cfg={type:'bar',data:{labels:S,datasets:[{label:'Lunas',data:L,backgroundColor:'rgba(26,122,74,.8)'},{label:'Bon',data:B,backgroundColor:'rgba(201,162,39,.8)'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:v=>v>=1e6?(v/1e6).toFixed(1)+'Jt':v}}}}};
+  } else if(type==='rab'){
+    const lbls=RAB.map(r=>r.uraian.slice(0,18));
+    const angg=RAB.map(r=>r.anggaran);
+    const real=RAB.map(r=>getRABRealisasi(r));
+    cfg={type:'bar',data:{labels:lbls,datasets:[{label:'RAB',data:angg,backgroundColor:'rgba(26,46,90,.6)'},{label:'Realisasi',data:real,backgroundColor:'rgba(26,122,74,.75)'}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{position:'bottom'}},scales:{x:{ticks:{callback:v=>v>=1e6?(v/1e6).toFixed(0)+'Jt':v}}}}};
+  }
+  chartInst=new Chart(ctx,cfg);
+}
+
+// ═══ PRINT MODAL ═══
+function bukaModalPrint(type){
+  printType=type;
+  const titles={masuk:'Laporan Pemasukan',keluar:'Laporan Pengeluaran',janji:'Laporan Janji Iman'};
+  document.getElementById('printModalTitle').innerHTML='🖨️ '+titles[type]+' <button class="modal-close-btn" onclick="tutupModalPrint()">✕</button>';
+  updatePrintPreview();
+  document.getElementById('modalPrint').classList.add('open');
+}
+function tutupModalPrint(){document.getElementById('modalPrint').classList.remove('open');}
+function setPrintFmt(f){
+  document.getElementById('print-fmt').value=f;
+  document.getElementById('print-fmt-pdf').className='mb '+(f==='pdf'?'at':'');
+  document.getElementById('print-fmt-csv').className='mb '+(f==='csv'?'an':'');
+  document.getElementById('print-exec-btn').textContent=f==='pdf'?'🖨️ Print Sekarang':'📊 Download CSV';
+  updatePrintPreview();
+}
+function updatePrintPreview(){
+  const dari=document.getElementById('print-dari').value;
+  const sampai=document.getElementById('print-sampai').value;
+  const type=printType;
+  const items=filterByDate(type,dari,sampai);
+  const total=items.reduce((a,b)=>a+Number(b.jumlah||0),0);
+  document.getElementById('print-preview-info').innerHTML=
+    `📊 <strong>${items.length} transaksi</strong> ditemukan dari <strong>${dari}</strong> s/d <strong>${sampai}</strong><br>Total: <strong>${rp(total)}</strong>`;
+}
+
+function filterByDate(type,dari,sampai){
+  let items=type==='masuk'?DATA.masuk:type==='keluar'?DATA.keluar:DATA.janji_iman;
+  if(!dari&&!sampai) return items;
+  return items.filter(x=>{
+    const tgl=normTgl(x.tanggal);
+    if(!tgl) return true;
+    if(dari&&tgl<dari) return false;
+    if(sampai&&tgl>sampai) return false;
+    return true;
+  });
+}
+
+function normTgl(t){
+  if(!t) return null;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(t)) return t;
+  // "04 May 2026" → "2026-05-04"
+  const months={Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12'};
+  const p=t.split(' ');
+  if(p.length===3 && months[p[1]]) return `${p[2]}-${months[p[1]]}-${p[0].padStart(2,'0')}`;
+  return t;
+}
+
+function eksekusiPrint(){
+  const dari=document.getElementById('print-dari').value;
+  const sampai=document.getElementById('print-sampai').value;
+  const fmt=document.getElementById('print-fmt').value;
+  const items=filterByDate(printType,dari,sampai);
+  if(fmt==='csv'){
+    downloadCSVFiltered(printType,items,dari,sampai);
+  } else {
+    printHtmlReport(printType,items,dari,sampai);
+  }
+  tutupModalPrint();
+}
+
+function downloadCSVFiltered(type,items,dari,sampai){
+  let rows,fname;
+  if(type==='masuk'){
+    rows=[['No','Tanggal','Sumber Dana','Kategori','Metode','Bank','No.Ref','Jumlah (Rp)','Keterangan']];
+    items.forEach((t,i)=>rows.push([i+1,t.tanggal,t.sumber||'',t.kategori||'',t.metode==='nontunai'?'Non-Tunai':'Tunai',t.bank||'',t.noref||'',t.jumlah,t.ket||'']));
+    fname='Pemasukan_GKPS';
+  } else if(type==='keluar'){
+    rows=[['No','Tanggal','Seksi','Uraian','Metode','Bank','No.Ref','Jumlah (Rp)','Keterangan']];
+    items.forEach((t,i)=>rows.push([i+1,t.tanggal,t.seksi||'',t.uraian||'',t.metode==='nontunai'?'Non-Tunai':'Tunai',t.bank||'',t.noref||'',t.jumlah,t.ket||'']));
+    fname='Pengeluaran_GKPS';
+  } else {
+    rows=[['No','Nama','Sektor','Jumlah Janji (Rp)','Status','Metode','Cicilan (Rp)','Sisa (Rp)','Keterangan']];
+    items.forEach((t,i)=>{
+      const cicil=(t.cicilan||[]).reduce((a,b)=>a+Number(b.jumlah||0),0);
+      rows.push([i+1,t.nama||'',t.sektor||'',t.jumlah,t.status||'',t.metode==='nontunai'?'Transfer':'Tunai',cicil,Math.max(0,Number(t.jumlah||0)-cicil),t.ket||'']);
+    });
+    fname='JanjiIman_GKPS';
+  }
+  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download=fname+'_'+dari+'_sd_'+sampai+'.csv';
+  a.click();
+  toast('📊 CSV diunduh!','s');
+}
+
+function printHtmlReport(type,items,dari,sampai){
+  const titles={masuk:'LAPORAN PEMASUKAN',keluar:'LAPORAN PENGELUARAN',janji:'LAPORAN JANJI IMAN'};
+  const total=items.reduce((a,b)=>a+Number(b.jumlah||0),0);
+  let tableHead='',tableRows='';
+  if(type==='masuk'){
+    tableHead='<tr style="background:#1a2e5a;color:white"><th>No</th><th>Tanggal</th><th>Sumber Dana</th><th>Kategori</th><th>Metode</th><th style="text-align:right">Jumlah (Rp)</th></tr>';
+    tableRows=items.map((t,i)=>`<tr style="background:${i%2?'#f4f6fb':''}"><td>${i+1}</td><td>${t.tanggal||''}</td><td>${t.sumber||''}</td><td>${t.kategori||''}</td><td>${t.metode==='nontunai'?'Non-Tunai':'Tunai'}</td><td style="text-align:right">${rpNum(t.jumlah)}</td></tr>`).join('');
+  } else if(type==='keluar'){
+    tableHead='<tr style="background:#1a2e5a;color:white"><th>No</th><th>Tanggal</th><th>Seksi</th><th>Uraian</th><th>Metode</th><th style="text-align:right">Jumlah (Rp)</th></tr>';
+    tableRows=items.map((t,i)=>`<tr style="background:${i%2?'#f4f6fb':''}"><td>${i+1}</td><td>${t.tanggal||''}</td><td>${t.seksi||''}</td><td>${t.uraian||''}</td><td>${t.metode==='nontunai'?'Non-Tunai':'Tunai'}</td><td style="text-align:right">${rpNum(t.jumlah)}</td></tr>`).join('');
+  } else {
+    tableHead='<tr style="background:#1a2e5a;color:white"><th>No</th><th>Nama</th><th>Sektor</th><th>Status</th><th style="text-align:right">Jumlah (Rp)</th><th style="text-align:right">Cicilan (Rp)</th><th style="text-align:right">Sisa (Rp)</th></tr>';
+    tableRows=items.map((t,i)=>{const c=(t.cicilan||[]).reduce((a,b)=>a+Number(b.jumlah||0),0);return`<tr style="background:${i%2?'#f4f6fb':''}"><td>${i+1}</td><td>${t.nama||''}</td><td>${t.sektor||''}</td><td>${t.status||''}</td><td style="text-align:right">${rpNum(t.jumlah)}</td><td style="text-align:right">${rpNum(c)}</td><td style="text-align:right">${rpNum(Math.max(0,Number(t.jumlah||0)-c))}</td></tr>`;}).join('');
+  }
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>${titles[type]}</title>
+  <style>body{font-family:Arial,sans-serif;padding:24px;font-size:12px;}
+  h2{color:#1a2e5a;margin-bottom:4px;}h4{color:#7a8299;font-weight:400;margin-bottom:14px;}
+  table{width:100%;border-collapse:collapse;margin-bottom:16px;}
+  th,td{padding:7px 8px;border:1px solid #e2e8f4;text-align:left;font-size:11px;}
+  .total-row{background:#e8f7ef;font-weight:700;}
+  .footer{margin-top:24px;display:flex;justify-content:space-between;}
+  .sign{text-align:center;}.sign .line{border-top:1px solid #1a2e5a;margin-top:50px;padding-top:5px;}
+  @media print{@page{margin:1cm;}}</style></head><body>
+  <div style="text-align:center;margin-bottom:16px">
+    <div style="font-size:20px;margin-bottom:6px">✝️</div>
+    <h2>${titles[type]}</h2>
+    <h4>PESTA HUT GKPS JEMAAT BINJAI KE-63</h4>
+    <p style="font-size:11px;color:#7a8299">Periode: ${dari} s/d ${sampai} | Dicetak: ${new Date().toLocaleDateString('id-ID')}</p>
+  </div>
+  <table><thead>${tableHead}</thead><tbody>${tableRows}</tbody></table>
+  <table style="width:auto;margin-left:auto"><tr class="total-row"><td style="padding:8px 12px"><strong>TOTAL: Rp ${rpNum(total)}</strong></td></tr></table>
+  <div class="footer">
+    <div class="sign"><div class="line"><strong>Mengetahui,<br>Ketua Panitia</strong><br><br>Marthinus P. Hutasoit</div></div>
+    <div class="sign"><div class="line"><strong>Dibuat oleh,<br>Bendahara</strong><br><br>Yosi Permatasari Sinaga</div></div>
+  </div></body></html>`;
+  const w=window.open('','_blank');
+  w.document.write(html);
+  w.document.close();
+  setTimeout(()=>w.print(),500);
+}
+
+function printLPJ(){
+  const lpjEl=document.getElementById('lpj-content');
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>LPJ HUT GKPS Binjai 63</title>
+  <style>body{font-family:Arial,sans-serif;padding:20px;font-size:12px;}
+  table{width:100%;border-collapse:collapse;margin-bottom:12px;}
+  th,td{padding:6px 7px;border:1px solid #e2e8f4;font-size:11px;}
+  th{background:#1a2e5a;color:white;}
+  h2,h3{color:#1a2e5a;}.card{border:1px solid #e2e8f4;border-radius:8px;padding:12px;margin-bottom:12px;}
+  @page{margin:1cm;}</style></head><body>${lpjEl.innerHTML}</body></html>`;
+  const w=window.open('','_blank');
+  w.document.write(html);
+  w.document.close();
+  setTimeout(()=>w.print(),500);
+}
+
+// ═══ SIMPAN PEMASUKAN ═══
+async function simpanMasuk(){
+  const tgl=document.getElementById('m-tgl').value;
+  const src=document.getElementById('m-src').value.trim();
+  const kat=document.getElementById('m-kat').value;
+  const jml=document.getElementById('m-jml').value;
+  const met=document.getElementById('m-met').value;
+  const bank=met==='nontunai'?document.getElementById('m-bank').value:'';
+  const ref=met==='nontunai'?document.getElementById('m-ref').value.trim():'';
+  const admin=met==='nontunai'?Number(document.getElementById('m-admin').value||0):0;
+  const ket=document.getElementById('m-ket').value.trim();
+  const file=document.getElementById('fMasuk').files[0];
+  const editId=document.getElementById('m-edit-id').value;
+  if(!tgl||!src||!kat||!jml){toast('Lengkapi field wajib!','e');return;}
+  let foto='';if(file)foto=await toB64(file);
+  const waktu=new Date().toISOString();
+  if(editId){
+    const idx=DATA.masuk.findIndex(x=>x.id===editId);
+    if(idx>=0){DATA.masuk[idx]={...DATA.masuk[idx],tanggal:tgl,sumber:src,kategori:kat,jumlah:Number(jml),metode:met,bank,noref:ref,ket,waktu};if(foto)DATA.masuk[idx].foto=foto;}
+    toast('✏️ Pemasukan diperbarui!','s');
+    pushToGAS('updateMasuk',{record:DATA.masuk.find(x=>x.id===editId)||{}});
+    batalEditMasuk();
+  } else {
+    DATA.masuk.push({id:'new'+Date.now(),tanggal:tgl,sumber:src,kategori:kat,jumlah:Number(jml),metode:met,bank,noref:ref,ket,foto,oleh:CFG.NAMA_BENDAHARA,type:'masuk',waktu});
+    if(admin>0) DATA.keluar.push({id:'new'+(Date.now()+1),tanggal:tgl,seksi:'Biaya Admin Bank',uraian:'Biaya admin — '+src,jumlah:admin,metode:'nontunai',bank,noref:ref,ket:'Otomatis dari pemasukan: '+src,foto:'',oleh:CFG.NAMA_BENDAHARA,type:'keluar',status:'approved',waktu});
+    toast('✅ Pemasukan disimpan!'+(admin>0?' + biaya admin':''),'s');
+    ['m-src','m-jml','m-ket','m-ref','m-admin'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
+    document.getElementById('m-kat').value='';document.getElementById('m-bank').value='';
+    document.getElementById('pvMasuk').style.display='none';document.getElementById('fMasuk').value='';
+    setM('masuk','tunai');
+    pushToGAS('addMasuk',{record:DATA.masuk[DATA.masuk.length-1]});
+    if(admin>0) pushToGAS('addKeluar',{record:DATA.keluar[DATA.keluar.length-1]});
+  }
+  saveLocal();updateAll();
+}
+
+// ═══ SIMPAN PENGELUARAN ═══
+async function simpanKeluar(){
+  const tgl=document.getElementById('k-tgl').value;
+  const seksi=document.getElementById('k-seksi').value;
+  const urai=document.getElementById('k-urai').value.trim();
+  const jml=document.getElementById('k-jml').value;
+  const met=document.getElementById('k-met').value;
+  const bank=met==='nontunai'?document.getElementById('k-bank').value:'';
+  const ref=met==='nontunai'?document.getElementById('k-ref').value.trim():'';
+  const ket=document.getElementById('k-ket').value.trim();
+  const file=document.getElementById('fKeluar').files[0];
+  const editId=document.getElementById('k-edit-id').value;
+  if(!tgl||!seksi||!urai||!jml){toast('Lengkapi field wajib!','e');return;}
+  let foto='';if(file)foto=await toB64(file);
+  const waktu=new Date().toISOString();
+  if(editId){
+    const idx=DATA.keluar.findIndex(x=>x.id===editId);
+    if(idx>=0){DATA.keluar[idx]={...DATA.keluar[idx],tanggal:tgl,seksi,uraian:urai,jumlah:Number(jml),metode:met,bank,noref:ref,ket,waktu};if(foto)DATA.keluar[idx].foto=foto;}
+    toast('✏️ Pengeluaran diperbarui!','s');pushToGAS('updateKeluar',{record:DATA.keluar[idx]||{}});batalEditKeluar();
+  } else {
+    DATA.keluar.push({id:'new'+Date.now(),tanggal:tgl,seksi,uraian:urai,jumlah:Number(jml),metode:met,bank,noref:ref,ket,foto,oleh:CFG.NAMA_BENDAHARA,type:'keluar',status:'approved',waktu});
+    toast('✅ Pengeluaran disimpan!','s');
+    ['k-urai','k-jml','k-ket','k-ref'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
+    document.getElementById('k-seksi').value='';document.getElementById('k-bank').value='';
+    document.getElementById('pvKeluar').style.display='none';document.getElementById('fKeluar').value='';
+    setM('keluar','tunai');
+    pushToGAS('addKeluar',{record:DATA.keluar[DATA.keluar.length-1]});
+  }
+  saveLocal();updateAll();
+}
+
+// ═══ LOAD LISTS ═══
+function loadMasukList(){
+  const el=document.getElementById('masuk-list');
+  const sorted=[...DATA.masuk].sort((a,b)=>new Date(b.waktu||b.tanggal)-new Date(a.waktu||a.tanggal));
+  el.innerHTML=sorted.length?'<div>'+sorted.map(t=>trxItem({...t,type:'masuk'},'masuk')).join('')+'</div>'
+    :'<div class="empty"><div class="ei">📭</div><p>Belum ada pemasukan</p></div>';
+}
+function loadKeluarList(){
+  const el=document.getElementById('keluar-list');
+  const sorted=[...DATA.keluar].sort((a,b)=>new Date(b.waktu||b.tanggal)-new Date(a.waktu||a.tanggal));
+  el.innerHTML=sorted.length?'<div>'+sorted.map(t=>trxItem({...t,type:'keluar'},'keluar')).join('')+'</div>'
+    :'<div class="empty"><div class="ei">📭</div><p>Belum ada pengeluaran</p></div>';
+}
+
+function trxItem(t,ctx){
+  const iM=t.type==='masuk';
+  const metBadge='<span class="badge-sm '+(t.metode==='nontunai'?'bg-nontunai':'bg-tunai')+'">'+(t.metode==='nontunai'?'NON-TUNAI':'TUNAI')+'</span>';
+  const katLabel=iM?(t.kategori||'Pemasukan'):(t.seksi||'Pengeluaran');
+  const namaLabel=iM?(t.sumber||'Pemasukan'):(t.uraian||'Pengeluaran');
+  const bgIco=iM?'var(--gl)':'var(--rl)';
+  const ico=iM?'📥':'📤';
+  const amtClass=iM?'in':'out';
+  const amtPfx=iM?'+':'-';
+  const actButtons=ctx==='dashboard'?'':
+    '<div class="trx-divider"></div>'+
+    '<div class="trx-actions">'+
+      '<button class="trx-act-btn edit" onclick="editTrx(\''+(iM?'masuk':'keluar')+'\',\''+t.id+'\')">✏️ Edit</button>'+
+      '<button class="trx-act-btn del" onclick="konfirmHapus(\''+(iM?'masuk':'keluar')+'\',\''+t.id+'\')">🗑️ Hapus</button>'+
+    '</div>';
+  return '<div class="trx-card">'+
+    '<div class="trx-top">'+
+      '<div class="trx-ico" style="background:'+bgIco+'">'+ico+'</div>'+
+      '<div class="trx-main">'+
+        '<div class="trx-label">'+namaLabel+'</div>'+
+        '<div class="trx-sub">'+
+          '<span>'+( t.tanggal||'')+'</span>'+
+          metBadge+
+          '<span style="background:var(--bg);color:var(--muted);padding:1px 6px;border-radius:20px;font-size:9px;font-weight:600">'+katLabel+'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="trx-amount">'+
+        '<div class="trx-amt-val '+amtClass+'">'+amtPfx+rp(t.jumlah)+'</div>'+
+        '<div class="trx-amt-lbl">'+(iM?'Pemasukan':'Pengeluaran')+'</div>'+
+      '</div>'+
+    '</div>'+actButtons+
+  '</div>';
+}
+
+// ═══ EDIT TRX ═══
+function editTrx(type,id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  const secId='sec-'+(type==='masuk'?'masuk':'keluar');
+  document.getElementById(secId).classList.add('active');
+  const nbIdx=type==='masuk'?1:2;
+  document.querySelectorAll('.nb')[nbIdx].classList.add('active');
+  const items=type==='masuk'?DATA.masuk:DATA.keluar;
+  const t=items.find(x=>x.id===id);if(!t)return;
+  const p=type==='masuk'?'m':'k';
+  document.getElementById(p+'-tgl').value=normTgl(t.tanggal)||t.tanggal||'';
+  document.getElementById(p+(type==='masuk'?'-src':'-urai')).value=type==='masuk'?(t.sumber||''):(t.uraian||'');
+  document.getElementById(p+(type==='masuk'?'-kat':'-seksi')).value=type==='masuk'?(t.kategori||''):(t.seksi||'');
+  document.getElementById(p+'-jml').value=t.jumlah||'';
+  document.getElementById(p+'-ket').value=t.ket||'';
+  setM(type==='masuk'?'masuk':'keluar',t.metode==='nontunai'?'nontunai':'tunai');
+  if(t.metode==='nontunai'){document.getElementById(p+'-bank').value=t.bank||'';document.getElementById(p+'-ref').value=t.noref||'';}
+  document.getElementById(p+'-edit-id').value=id;
+  const sb=document.getElementById(p+'-save-btn');
+  sb.textContent='💾 Simpan Perubahan';sb.style.background='var(--gold)';sb.style.color='var(--navy)';
+  document.getElementById(p+'-cancel-btn').style.display='flex';
+  document.getElementById(type==='masuk'?'masuk-form-card':'keluar-form-card').scrollIntoView({behavior:'smooth'});
+  toast('✏️ Mode edit — ubah data lalu simpan','');
+}
+
+function batalEditMasuk(){
+  document.getElementById('m-edit-id').value='';
+  const sb=document.getElementById('m-save-btn');sb.textContent='💾 Simpan Pemasukan';sb.style.background='';sb.style.color='';sb.className='btn btn-s';
+  document.getElementById('m-cancel-btn').style.display='none';
+  ['m-src','m-jml','m-ket','m-ref','m-admin'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
+  document.getElementById('m-kat').value='';document.getElementById('m-bank').value='';setM('masuk','tunai');
+}
+function batalEditKeluar(){
+  document.getElementById('k-edit-id').value='';
+  const sb=document.getElementById('k-save-btn');sb.textContent='💾 Simpan Pengeluaran';sb.style.background='';sb.style.color='';sb.className='btn btn-p';
+  document.getElementById('k-cancel-btn').style.display='none';
+  ['k-urai','k-jml','k-ket','k-ref'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
+  document.getElementById('k-seksi').value='';document.getElementById('k-bank').value='';setM('keluar','tunai');
+}
+
+// ═══ JANJI IMAN ═══
+function loadJI(){
+  const lunas=DATA.janji_iman.filter(x=>x.status!=='bon').reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const bon=DATA.janji_iman.filter(x=>x.status==='bon').reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const cicil=DATA.janji_iman.filter(x=>x.status==='bon').reduce((a,b)=>a+(b.cicilan||[]).reduce((s,c)=>s+Number(c.jumlah||0),0),0);
+  const sisa=bon-cicil;
+  document.getElementById('ji-total-lunas').textContent=rp(lunas);
+  document.getElementById('ji-total-bon').textContent=rp(bon);
+  document.getElementById('ji-total-cicil').textContent=rp(cicil);
+  document.getElementById('ji-sisa-bon').textContent=rp(sisa>0?sisa:0);
+  let data=[...DATA.janji_iman];
+  if(jiFilter==='lunas') data=data.filter(x=>x.status!=='bon');
+  else if(jiFilter==='bon') data=data.filter(x=>x.status==='bon');
+  else if(jiFilter.startsWith('Sektor')) data=data.filter(x=>x.sektor===jiFilter);
+  const el=document.getElementById('ji-list');
+  if(!data.length){el.innerHTML='<div class="empty"><div class="ei">📋</div><p>Tidak ada data</p></div>';return;}
+  el.innerHTML='<div style="overflow-x:auto"><table class="ji-tbl"><thead><tr><th>#</th><th>Nama</th><th>Sektor</th><th style="text-align:right">Janji</th><th>Status</th><th>Aksi</th></tr></thead><tbody>'+
+    data.map((x,i)=>{
+      const cicilTotal=(x.cicilan||[]).reduce((s,c)=>s+Number(c.jumlah||0),0);
+      const sisa=x.status==='bon'?(Number(x.jumlah||0)-cicilTotal):0;
+      const sb=x.status==='bon'?`<span class="badge-sm bg-bon">📋 Bon${sisa>0?' (sisa '+rp(sisa)+')':' ✅'}</span>`
+        :`<span class="badge-sm ${x.status==='lunas-transfer'?'bg-nontunai':'bg-lunas'}">${x.status==='lunas-transfer'?'📱 Transfer':'💵 Tunai'}</span>`;
+      return `<tr><td>${i+1}</td><td><strong>${x.nama||''}</strong></td><td>${x.sektor||''}</td>
+        <td style="text-align:right;font-weight:600">${rpNum(x.jumlah)}</td><td>${sb}</td>
+        <td style="white-space:nowrap">
+          <button class="btn btn-sm btn-g" onclick="editJI('${x.id||i}')" style="padding:3px 7px;margin-bottom:2px">✏️</button>
+          ${x.status==='bon'?`<button class="btn btn-sm" style="background:var(--bl);color:var(--navy);padding:3px 7px" onclick="bukaModalCicil('${x.id||i}')">💳</button>`:''}
+          <button class="btn btn-sm btn-d" onclick="konfirmHapus('janji','${x.id||i}')" style="padding:3px 7px">🗑️</button>
+        </td></tr>`;
+    }).join('')+'</tbody></table></div>';
+}
+function filterJI(f){jiFilter=f;loadJI();}
+
+function simpanJI(){
+  const nama=document.getElementById('ji-nama').value.trim();
+  const sektor=document.getElementById('ji-sektor').value;
+  const jml=document.getElementById('ji-jml').value;
+  const status=document.getElementById('ji-status').value;
+  const bank=status==='lunas-transfer'?document.getElementById('ji-bank').value:'';
+  const tgl=document.getElementById('ji-tgl').value;
+  const ket=document.getElementById('ji-ket').value.trim();
+  const editId=document.getElementById('ji-edit-id').value;
+  if(!nama||!sektor||!jml){toast('Lengkapi field wajib!','e');return;}
+  const metode=status==='lunas-transfer'?'nontunai':'tunai';
+  const kontan=status==='lunas-tunai'?Number(jml):0;
+  const transfer=status==='lunas-transfer'?Number(jml):0;
+  const bon=status==='bon'?Number(jml):0;
+  if(editId){
+    const idx=DATA.janji_iman.findIndex((x,i)=>x.id===editId||String(i)===editId);
+    if(idx>=0) DATA.janji_iman[idx]={...DATA.janji_iman[idx],nama,sektor,jumlah:Number(jml),status,metode,bank,tanggal:tgl,ket,kontan,transfer,bon};
+    toast('✏️ Janji Iman diperbarui!','s');
+    pushToGAS('updateJanji',{record:DATA.janji_iman[idx]});
+    batalEditJI();
+  } else {
+    DATA.janji_iman.push({id:'new'+Date.now(),nama,sektor,jumlah:Number(jml),status,metode,bank,tanggal:tgl,ket,kontan,transfer,bon,cicilan:[]});
+    toast('✅ Janji Iman disimpan!','s');
+    pushToGAS('addJanji',{record:DATA.janji_iman[DATA.janji_iman.length-1]});
+    ['ji-nama','ji-jml','ji-ket'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('ji-sektor').value='';document.getElementById('ji-bank').value='';
+    setJiStatus('lunas-tunai');
+  }
+  saveLocal();updateAll();loadJI();
+}
+function editJI(id){
+  const idx=DATA.janji_iman.findIndex((x,i)=>x.id===id||String(i)===id);if(idx<0)return;
+  const x=DATA.janji_iman[idx];
+  document.getElementById('ji-nama').value=x.nama||'';document.getElementById('ji-sektor').value=x.sektor||'';
+  document.getElementById('ji-jml').value=x.jumlah||'';document.getElementById('ji-tgl').value=x.tanggal||'';
+  document.getElementById('ji-ket').value=x.ket||'';setJiStatus(x.status||'lunas-tunai');
+  if(x.status==='lunas-transfer')document.getElementById('ji-bank').value=x.bank||'';
+  document.getElementById('ji-edit-id').value=id;
+  const sb=document.getElementById('ji-save-btn');sb.textContent='💾 Simpan Perubahan';sb.style.background='var(--navy)';sb.style.color='white';
+  document.getElementById('ji-cancel-btn').style.display='flex';
+  document.querySelector('#sec-janji .card').scrollIntoView({behavior:'smooth'});toast('✏️ Mode edit Janji Iman','');
+}
+function batalEditJI(){
+  document.getElementById('ji-edit-id').value='';
+  const sb=document.getElementById('ji-save-btn');sb.textContent='💾 Simpan';sb.style.background='';sb.style.color='';sb.className='btn btn-g';
+  document.getElementById('ji-cancel-btn').style.display='none';
+  ['ji-nama','ji-jml','ji-ket'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('ji-sektor').value='';setJiStatus('lunas-tunai');
+}
+
+// ═══ CICILAN ═══
+function bukaModalCicil(jiId){
+  const ji=DATA.janji_iman.find((x,i)=>x.id===jiId||String(i)===jiId);if(!ji)return;
+  document.getElementById('cicil-ji-id').value=jiId;
+  const cicilTotal=(ji.cicilan||[]).reduce((s,c)=>s+Number(c.jumlah||0),0);
+  const sisa=Number(ji.jumlah||0)-cicilTotal;
+  document.getElementById('cicil-info').innerHTML=`<strong>${ji.nama}</strong> — ${ji.sektor}<br>Total Janji: <strong>${rp(ji.jumlah)}</strong> | Sudah Cicil: <strong style="color:var(--green)">${rp(cicilTotal)}</strong> | Sisa: <strong style="color:${sisa>0?'var(--red)':'var(--green)'}">${rp(sisa>0?sisa:0)}</strong>`;
+  const cl=document.getElementById('cicil-list');
+  cl.innerHTML=(ji.cicilan||[]).length?
+    (ji.cicilan||[]).map((c,i)=>`<div class="cicil-row"><div><span style="font-size:10px;color:var(--muted)">${c.tanggal||''}</span><br>${c.ket||'Cicilan ke-'+(i+1)}<br><span class="badge-sm ${c.metode==='nontunai'?'bg-nontunai':'bg-tunai'}">${c.metode==='nontunai'?'Transfer':'Tunai'}</span></div><div style="text-align:right"><span style="font-weight:700;color:var(--green)">+${rp(c.jumlah)}</span><br><button class="btn btn-sm btn-d" onclick="hapusCicilan('${jiId}',${i})" style="padding:2px 7px;margin-top:3px">🗑️</button></div></div>`).join('')
+    :'<div style="color:var(--muted);font-size:12px;padding:8px 0">Belum ada cicilan</div>';
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('cicil-tgl').value=today;
+  document.getElementById('cicil-jml').value=sisa>0?sisa:'';
+  document.getElementById('cicil-ket').value='';setCicilM('tunai');
+  document.getElementById('modalCicil').classList.add('open');
+}
+function tutupModalCicil(){document.getElementById('modalCicil').classList.remove('open');}
+function setCicilM(m){
+  document.getElementById('cicil-met').value=m;
+  document.getElementById('cicil-bt').className='mb '+(m==='tunai'?'at':'');
+  document.getElementById('cicil-bn').className='mb '+(m==='nontunai'?'an':'');
+  document.getElementById('cicil-ntf').classList.toggle('show',m==='nontunai');
+}
+function simpanCicilan(){
+  const jiId=document.getElementById('cicil-ji-id').value;
+  const tgl=document.getElementById('cicil-tgl').value;
+  const jml=document.getElementById('cicil-jml').value;
+  const met=document.getElementById('cicil-met').value;
+  const ref=document.getElementById('cicil-ref').value.trim();
+  const ket=document.getElementById('cicil-ket').value.trim();
+  if(!jml||Number(jml)<=0){toast('Masukkan jumlah cicilan!','e');return;}
+  const idx=DATA.janji_iman.findIndex((x,i)=>x.id===jiId||String(i)===jiId);if(idx<0)return;
+  if(!DATA.janji_iman[idx].cicilan)DATA.janji_iman[idx].cicilan=[];
+  DATA.janji_iman[idx].cicilan.push({tanggal:tgl,jumlah:Number(jml),metode:met,ref,ket:ket||'Cicilan ke-'+(DATA.janji_iman[idx].cicilan.length+1),waktu:new Date().toISOString()});
+  const ci=DATA.janji_iman[idx].cicilan.reduce((s,c)=>s+Number(c.jumlah||0),0);
+  if(ci>=Number(DATA.janji_iman[idx].jumlah||0)){DATA.janji_iman[idx].status='lunas-cicil';toast('🎉 Lunas!','s');}
+  else toast('✅ Cicilan disimpan! Sisa: '+rp(Number(DATA.janji_iman[idx].jumlah||0)-ci),'s');
+  saveLocal();updateAll();bukaModalCicil(jiId);
+  pushToGAS('addCicilan',{ji_id:jiId,cicilan:DATA.janji_iman[idx].cicilan[DATA.janji_iman[idx].cicilan.length-1]});
+}
+function hapusCicilan(jiId,idx){
+  const jiIdx=DATA.janji_iman.findIndex((x,i)=>x.id===jiId||String(i)===jiId);if(jiIdx<0)return;
+  DATA.janji_iman[jiIdx].cicilan.splice(idx,1);
+  if(DATA.janji_iman[jiIdx].status==='lunas-cicil')DATA.janji_iman[jiIdx].status='bon';
+  saveLocal();updateAll();bukaModalCicil(jiId);toast('🗑️ Cicilan dihapus','s');
+}
+
+
+// ═══ FULL TIMER DATA ═══
+const FULL_TIMER = [
+  {key:'parambilan', nama:'Parambilan',     icon:'🥁', rab:1000000, seksi:'Sie Acara / Hiburan'},
+  {key:'paragenda',  nama:'Para Agenda',    icon:'📋', rab:500000,  seksi:'Sie Acara / Hiburan'},
+  {key:'keyboard',   nama:'Keyboard',       icon:'🎹', rab:1000000, seksi:'Sie Acara / Hiburan'},
+  {key:'tagading',   nama:'Tagading',       icon:'🪘', rab:1000000, seksi:'Sie Acara / Hiburan'},
+  {key:'saxophone',  nama:'Saxophone',      icon:'🎷', rab:1500000, seksi:'Sie Acara / Hiburan'},
+  {key:'seruling',   nama:'Seruling/Flute', icon:'🪈', rab:0,       seksi:'Sie Acara / Hiburan'},
+];
+
+if(!DATA.full_timer) DATA.full_timer = {};
+
+function getFTPaid(key){
+  return (DATA.full_timer[key]||[]).reduce((a,b)=>a+Number(b.jumlah||0),0);
+}
+
+function loadFTCard(){
+  const grid = document.getElementById('ftGrid');
+  if(!grid) return;
+  grid.innerHTML = FULL_TIMER.map(ft=>{
+    const paid = getFTPaid(ft.key);
+    const pct  = ft.rab>0 ? Math.round(paid/ft.rab*100) : (paid>0?100:0);
+    const statusClass = paid>=ft.rab&&ft.rab>0?'done':paid>0?'partial':'none';
+    const statusText  = paid>=ft.rab&&ft.rab>0?'✅ Lunas':paid>0?'⚡ Sebagian':'⏳ Belum';
+    return `<div class="ft-item" onclick="bukaModalFT('${ft.key}')">
+      <div class="ft-icon">${ft.icon}</div>
+      <div class="ft-nama">${ft.nama}</div>
+      <div class="ft-rab">RAB: ${ft.rab>0?rp(ft.rab):'(belum ditetapkan)'}</div>
+      <div class="ft-real ${paid>0?'':'belum'}">${paid>0?rp(paid):'Belum dibayar'}</div>
+      <span class="ft-status ${statusClass}">${statusText}${ft.rab>0&&paid>0&&paid<ft.rab?' ('+pct+'%)'  :''}</span>
+      <button class="ft-btn">➕ Input Bayaran</button>
+    </div>`;
+  }).join('');
+}
+
+function bukaModalFT(key){
+  const ft = FULL_TIMER.find(x=>x.key===key); if(!ft) return;
+  const paid = getFTPaid(key);
+  const sisa = ft.rab>0 ? Math.max(0, ft.rab-paid) : 0;
+  document.getElementById('ft-key').value = key;
+  document.getElementById('ftModalTitle').innerHTML =
+    ft.icon+' '+ft.nama+' <button class="modal-close-btn" onclick="tutupModalFT()">✕</button>';
+  document.getElementById('ftModalInfo').innerHTML =
+    `<strong>${ft.nama}</strong> — ${ft.seksi}<br>`+
+    `RAB: <strong>${ft.rab>0?rp(ft.rab):'belum ditetapkan'}</strong> | `+
+    `Sudah dibayar: <strong style="color:var(--green)">${rp(paid)}</strong>`+
+    (sisa>0?` | Sisa: <strong style="color:var(--red)">${rp(sisa)}</strong>`:'');
+
+  // Isi jumlah default = sisa RAB atau kosong
+  document.getElementById('ft-jml').value = sisa>0?sisa:'';
+  document.getElementById('ft-ket').value = '';
+  document.getElementById('ft-ref').value = '';
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('ft-tgl').value = today;
+  setFTM('tunai');
+  document.getElementById('pvFT').style.display='none';
+  document.getElementById('fFT').value='';
+
+  // Load riwayat
+  const list = document.getElementById('ft-riwayat-list');
+  const rows = DATA.full_timer[key]||[];
+  list.innerHTML = rows.length
+    ? rows.map((r,i)=>`<div class="ft-modal-item">
+        <div>
+          <div class="ft-modal-nama">${r.ket||'Pembayaran ke-'+(i+1)}</div>
+          <div class="ft-modal-rab">${r.tanggal||''} • <span class="badge-sm ${r.metode==='nontunai'?'bg-nontunai':'bg-tunai'}">${r.metode==='nontunai'?'NON-TUNAI':'TUNAI'}</span></div>
+        </div>
+        <div style="text-align:right">
+          <div class="ft-modal-real">${rp(r.jumlah)}</div>
+          <button class="btn btn-sm btn-d" onclick="hapusFT('${key}',${i})" style="padding:2px 8px;margin-top:4px">🗑️</button>
+        </div>
+      </div>`).join('')
+    : '<div style="color:var(--muted);font-size:12px;padding:8px 0">Belum ada pembayaran</div>';
+
+  document.getElementById('modalFT').classList.add('open');
+}
+
+function tutupModalFT(){ document.getElementById('modalFT').classList.remove('open'); }
+
+function setFTM(m){
+  document.getElementById('ft-met').value=m;
+  document.getElementById('ft-bt').className='mb '+(m==='tunai'?'at':'');
+  document.getElementById('ft-bn').className='mb '+(m==='nontunai'?'an':'');
+  document.getElementById('ft-ntf').classList.toggle('show',m==='nontunai');
+}
+
+async function simpanFT(){
+  const key  = document.getElementById('ft-key').value;
+  const tgl  = document.getElementById('ft-tgl').value;
+  const jml  = document.getElementById('ft-jml').value;
+  const met  = document.getElementById('ft-met').value;
+  const ref  = document.getElementById('ft-ref').value.trim();
+  const ket  = document.getElementById('ft-ket').value.trim();
+  const file = document.getElementById('fFT').files[0];
+  if(!jml||Number(jml)<=0){toast('Masukkan jumlah!','e');return;}
+  const ft = FULL_TIMER.find(x=>x.key===key); if(!ft) return;
+  let foto=''; if(file) foto=await toB64(file);
+  const waktu = new Date().toISOString();
+
+  // Simpan ke DATA.full_timer
+  if(!DATA.full_timer[key]) DATA.full_timer[key]=[];
+  const bayar = {tanggal:tgl,jumlah:Number(jml),metode:met,ref,ket:ket||'Transport '+ft.nama,foto,waktu};
+  DATA.full_timer[key].push(bayar);
+
+  // Auto tambah ke DATA.keluar (pengeluaran total)
+  const keluarRecord = {
+    id:'new'+Date.now(),
+    tanggal:tgl,
+    seksi:'Sie Acara / Hiburan',
+    uraian:'Transport Full Timer — '+ft.nama,
+    jumlah:Number(jml),
+    metode:met,
+    bank:'',
+    noref:ref,
+    ket:ket||'Transport Full Timer '+ft.nama,
+    foto,
+    oleh:CFG.NAMA_BENDAHARA,
+    type:'keluar',
+    status:'approved',
+    waktu
+  };
+  DATA.keluar.push(keluarRecord);
+
+  saveLocal(); updateAll(); loadFTCard(); loadSeksi(); loadKeluarList();
+  pushToGAS('addKeluar',{record:keluarRecord});
+  // Simpan ft state ke GAS via custom action (gunakan addKegiatan sebagai workaround dgn tag ft_)
+  pushToGAS('addKegiatan',{record:{id:'ft_'+key+'_'+Date.now(),seksi:'Full Timer Musik',nama:ft.nama+' — Transport',tanggal:tgl,ket:ket,biaya:Number(jml),foto,waktu,ft_key:key}});
+
+  const paid = getFTPaid(key);
+  const sisa = ft.rab>0 ? Math.max(0,ft.rab-paid) : 0;
+  if(ft.rab>0 && paid>=ft.rab) toast('🎉 '+ft.nama+' LUNAS!','s');
+  else toast('✅ Transport '+ft.nama+' disimpan! '+(sisa>0?'Sisa: '+rp(sisa):''),'s');
+
+  bukaModalFT(key); // refresh modal
+}
+
+function hapusFT(key, idx){
+  if(!DATA.full_timer[key]) return;
+  const removed = DATA.full_timer[key][idx];
+  DATA.full_timer[key].splice(idx,1);
+  // Hapus dari keluar juga (cari yang matching)
+  const ft = FULL_TIMER.find(x=>x.key===key);
+  if(ft && removed){
+    const kiIdx = DATA.keluar.findIndex(k=>
+      k.uraian&&k.uraian.includes(ft.nama)&&
+      k.seksi==='Sie Acara / Hiburan'&&
+      k.jumlah===Number(removed.jumlah||0)&&
+      k.tanggal===removed.tanggal
+    );
+    if(kiIdx>=0){
+      const delId = DATA.keluar[kiIdx].id;
+      DATA.keluar.splice(kiIdx,1);
+      pushToGAS('deleteKeluar',{id:delId});
+    }
+  }
+  saveLocal(); updateAll(); loadFTCard(); loadSeksi(); loadKeluarList();
+  bukaModalFT(key); toast('🗑️ Dihapus','s');
+}
+
+// ═══ SEKSI ═══
+function loadSeksi(){
+  const seksiList=['Sie Konsumsi','Sie Acara / Hiburan','Full Timer Musik','Sie Perlombaan','Sie Tempat / Parkir','Sie Dokumentasi','Sie Kesehatan','Pengadaan Alat Musik','Pengadaan Sound System / TV','Operasional / Lain-lain'];
+  const el=document.getElementById('seksi-list');
+  el.innerHTML=seksiList.map(seksi=>{
+    const kg=DATA.kegiatan.filter(x=>x.seksi===seksi);
+    const ks=DATA.keluar.filter(x=>x.seksi===seksi);
+    const tot=ks.reduce((a,b)=>a+Number(b.jumlah||0),0);
+    const id='skbody-'+seksi.replace(/[^a-z0-9]/gi,'-');
+    return `<div class="seksi-card">
+      <div class="seksi-hdr" onclick="document.getElementById('${id}').classList.toggle('open')">
+        <div><h3>${seksi}</h3><div style="font-size:10px;color:var(--muted);margin-top:2px">${kg.length} kegiatan • ${ks.length} pengeluaran</div></div>
+        <div style="text-align:right"><div class="seksi-total">${rp(tot)}</div><div style="font-size:10px;color:var(--muted)">▼</div></div>
+      </div>
+      <div class="seksi-body" id="${id}">
+        ${kg.length?kg.map(k=>`<div class="kegiatan-item"><div class="kegiatan-hdr"><div><div class="kegiatan-nama">📌 ${k.nama||''}</div><div class="kegiatan-meta">${k.tanggal||''}${k.ket?' — '+k.ket:''}</div></div><div style="text-align:right;flex-shrink:0">${k.biaya>0?`<div style="font-size:12px;font-weight:700;color:var(--red)">${rp(k.biaya)}</div>`:''}
+          <div style="display:flex;gap:4px;margin-top:3px"><button class="btn btn-sm btn-g" onclick="editKegiatan('${k.id}')" style="padding:3px 7px">✏️</button><button class="btn btn-sm btn-d" onclick="konfirmHapus('kegiatan','${k.id}')" style="padding:3px 7px">🗑️</button></div></div></div>
+          ${k.foto?`<div style="margin-top:5px"><img src="${k.foto}" class="doc-thumb" onclick="bukaFotoSrc('${k.foto.replace(/'/g,"\'")}')" alt="dok"/></div>`:''}</div>`).join('')
+        :'<div style="color:var(--muted);font-size:12px;padding:10px 0">Belum ada kegiatan</div>'}
+        ${ks.length?`<div style="margin-top:8px;border-top:1px solid var(--bdr);padding-top:8px"><div class="slbl">Pengeluaran</div>${ks.map(k=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--bdr);font-size:11px"><div><div style="font-weight:600">${k.uraian||''}</div><div style="color:var(--muted)">${k.tanggal||''} • <span class="badge-sm ${k.metode==='nontunai'?'bg-nontunai':'bg-tunai'}">${k.metode==='nontunai'?'NON-TUNAI':'TUNAI'}</span></div></div><div style="font-weight:700;color:var(--red)">${rp(k.jumlah)}</div></div>`).join('')}<div style="display:flex;justify-content:space-between;padding:6px 0;font-weight:700;font-size:12px"><span>Total</span><span style="color:var(--red)">${rp(tot)}</span></div></div>`:''}
+        <button class="btn btn-sm btn-p" onclick="isiSeksiForm('${seksi}')" style="margin-top:7px;width:100%">➕ Tambah Kegiatan</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function isiSeksiForm(seksi){document.getElementById('sk-seksi').value=seksi;document.getElementById('seksi-form-card').scrollIntoView({behavior:'smooth'});}
+
+async function simpanKegiatan(){
+  const seksi=document.getElementById('sk-seksi').value;
+  const nama=document.getElementById('sk-kegiatan').value.trim();
+  const tgl=document.getElementById('sk-tgl').value;
+  const ket=document.getElementById('sk-ket').value.trim();
+  const biaya=Number(document.getElementById('sk-biaya').value||0);
+  const file=document.getElementById('fSeksi').files[0];
+  const editId=document.getElementById('sk-edit-id').value;
+  if(!seksi||!nama){toast('Pilih seksi dan nama kegiatan!','e');return;}
+  let foto='';if(file)foto=await toB64(file);
+  const waktu=new Date().toISOString();
+  if(editId){
+    const idx=DATA.kegiatan.findIndex(x=>x.id===editId);
+    if(idx>=0){DATA.kegiatan[idx]={...DATA.kegiatan[idx],seksi,nama,tanggal:tgl,ket,biaya,waktu};if(foto)DATA.kegiatan[idx].foto=foto;}
+    toast('✏️ Kegiatan diperbarui!','s');batalEditKegiatan();
+  } else {
+    DATA.kegiatan.push({id:'new'+Date.now(),seksi,nama,tanggal:tgl,ket,biaya,foto,waktu});
+    if(biaya>0) DATA.keluar.push({id:'new'+(Date.now()+2),tanggal:tgl,seksi,uraian:nama,jumlah:biaya,metode:'tunai',bank:'',noref:'',ket:'Dari kegiatan: '+nama,foto:'',oleh:CFG.NAMA_BENDAHARA,type:'keluar',status:'approved',waktu});
+    toast('✅ Kegiatan disimpan!'+(biaya>0?' + pengeluaran dicatat':''),'s');
+    pushToGAS('addKegiatan',{record:DATA.kegiatan[DATA.kegiatan.length-1]});
+    if(biaya>0) pushToGAS('addKeluar',{record:DATA.keluar[DATA.keluar.length-1]});
+    ['sk-kegiatan','sk-ket','sk-biaya'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('sk-seksi').value='';document.getElementById('pvSeksi').style.display='none';document.getElementById('fSeksi').value='';
+  }
+  saveLocal();updateAll();loadSeksi();
+}
+function editKegiatan(id){
+  const k=DATA.kegiatan.find(x=>x.id===id);if(!k)return;
+  document.getElementById('sk-seksi').value=k.seksi||'';document.getElementById('sk-kegiatan').value=k.nama||'';
+  document.getElementById('sk-tgl').value=k.tanggal||'';document.getElementById('sk-ket').value=k.ket||'';
+  document.getElementById('sk-biaya').value=k.biaya||'';document.getElementById('sk-edit-id').value=id;
+  const sb=document.getElementById('sk-save-btn');sb.textContent='💾 Simpan Perubahan';sb.style.background='var(--gold)';sb.style.color='var(--navy)';
+  document.getElementById('sk-cancel-btn').style.display='flex';
+  document.getElementById('seksi-form-card').scrollIntoView({behavior:'smooth'});toast('✏️ Mode edit kegiatan','');
+}
+function batalEditKegiatan(){
+  document.getElementById('sk-edit-id').value='';
+  const sb=document.getElementById('sk-save-btn');sb.textContent='💾 Simpan Kegiatan';sb.style.background='';sb.style.color='';sb.className='btn btn-p';
+  document.getElementById('sk-cancel-btn').style.display='none';
+  ['sk-kegiatan','sk-ket','sk-biaya'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('sk-seksi').value='';document.getElementById('pvSeksi').style.display='none';
+}
+
+// ═══ LPJ ═══
+function loadLPJ(){
+  const tM=DATA.masuk.reduce((a,b)=>a+Number(b.jumlah||0),0);
+  const tK=DATA.keluar.reduce((a,b)=>a+Number(b.jumlah||0),0);
+  document.getElementById('lpj-masuk-rows').innerHTML=DATA.masuk.map((x,i)=>`<tr style="background:${i%2?'#f4f6fb':''}"><td style="padding:5px">${x.tanggal||''}</td><td style="padding:5px">${x.sumber||''}</td><td style="padding:5px"><span class="badge-sm ${x.metode==='nontunai'?'bg-nontunai':'bg-tunai'}">${x.metode==='nontunai'?'NON-TUNAI':'TUNAI'}</span></td><td style="padding:5px;text-align:right">${rpNum(x.jumlah)}</td></tr>`).join('');
+  document.getElementById('lpj-total-masuk').textContent=rpNum(tM);
+  const kGrp={};
+  DATA.keluar.forEach(x=>{const s=x.seksi||'Lainnya';if(!kGrp[s])kGrp[s]=[];kGrp[s].push(x);});
+  let rows='';let i=0;
+  Object.entries(kGrp).forEach(([seksi,items])=>{
+    const tot=items.reduce((a,b)=>a+Number(b.jumlah||0),0);
+    rows+=`<tr style="background:#243872;color:white"><td colspan="5" style="padding:5px 6px;font-size:10px">📌 ${seksi}</td></tr>`;
+    items.forEach(x=>{rows+=`<tr style="background:${i++%2?'#f4f6fb':''}"><td style="padding:5px">${x.tanggal||''}</td><td style="padding:5px">${seksi}</td><td style="padding:5px;padding-left:12px">${x.uraian||''}</td><td style="padding:5px"><span class="badge-sm ${x.metode==='nontunai'?'bg-nontunai':'bg-tunai'}">${x.metode==='nontunai'?'NON-TUNAI':'TUNAI'}</span></td><td style="padding:5px;text-align:right">${rpNum(x.jumlah)}</td></tr>`;});
+    rows+=`<tr style="background:#e8f7ef;font-weight:700"><td colspan="4" style="padding:5px">Subtotal ${seksi}</td><td style="padding:5px;text-align:right">${rpNum(tot)}</td></tr>`;
+  });
+  document.getElementById('lpj-keluar-rows').innerHTML=rows;
+  document.getElementById('lpj-total-keluar').textContent=rpNum(tK);
+  const jiGrp={};
+  DATA.janji_iman.forEach(x=>{const k=x.sektor||'Lainnya';if(!jiGrp[k])jiGrp[k]={kontan:0,transfer:0,bon:0,total:0};jiGrp[k].kontan+=Number(x.kontan||0);jiGrp[k].transfer+=Number(x.transfer||0);jiGrp[k].bon+=Number(x.bon||0);jiGrp[k].total+=Number(x.jumlah||0);});
+  let i2=0;
+  document.getElementById('lpj-ji-rows').innerHTML=Object.entries(jiGrp).map(([k,v])=>`<tr style="background:${i2++%2?'#f4f6fb':''}"><td style="padding:6px">${k}</td><td style="padding:6px;text-align:right">${rpNum(v.kontan)}</td><td style="padding:6px;text-align:right">${rpNum(v.transfer)}</td><td style="padding:6px;text-align:right">${rpNum(v.bon)}</td><td style="padding:6px;text-align:right;font-weight:700">${rpNum(v.total)}</td></tr>`).join('');
+  const jTot=Object.values(jiGrp).reduce((a,b)=>({kontan:a.kontan+b.kontan,transfer:a.transfer+b.transfer,bon:a.bon+b.bon,total:a.total+b.total}),{kontan:0,transfer:0,bon:0,total:0});
+  document.getElementById('lpj-ji-total').innerHTML=`<td style="padding:6px">TOTAL</td><td style="padding:6px;text-align:right">${rpNum(jTot.kontan)}</td><td style="padding:6px;text-align:right">${rpNum(jTot.transfer)}</td><td style="padding:6px;text-align:right">${rpNum(jTot.bon)}</td><td style="padding:6px;text-align:right">${rpNum(jTot.total)}</td>`;
+  // RAB rows di LPJ
+  let rabRows='';let i3=0;
+  RAB.forEach(r=>{
+    const real=getRABRealisasi(r);const sel=real-r.anggaran;const st=(RAB_STATE[r.id]||{}).checked;
+    rabRows+=`<tr style="background:${i3++%2?'#f4f6fb':''}"><td style="padding:5px">${r.uraian}</td><td style="padding:5px;text-align:right">${rpNum(r.anggaran)}</td><td style="padding:5px;text-align:right">${rpNum(real)}</td><td style="padding:5px;text-align:right;color:${sel>=0?'var(--green)':'var(--red)'}">${sel>0?'+':''}${rpNum(sel)}</td><td style="padding:5px;text-align:center">${st?'✅':'❌'}</td></tr>`;
+  });
+  document.getElementById('lpj-rab-rows').innerHTML=rabRows;
+  document.getElementById('lpj-s-masuk').textContent=rpNum(tM);
+  document.getElementById('lpj-s-keluar').textContent=rpNum(tK);
+  document.getElementById('lpj-saldo').textContent=rpNum(tM-tK);
+}
+
+// ═══ HAPUS ═══
+function konfirmHapus(type,id){
+  delTarget={type,id};
+  document.getElementById('confirmMsg').textContent='Yakin hapus data ini?';
+  document.getElementById('confirmOk').onclick=doHapus;
+  document.getElementById('confirmWrap').classList.add('open');
+}
+function closeConfirm(){document.getElementById('confirmWrap').classList.remove('open');delTarget=null;}
+function doHapus(){
+  if(!delTarget){closeConfirm();return;}
+  const{type,id}=delTarget;
+  const actionMap={masuk:'deleteMasuk',keluar:'deleteKeluar',janji:'deleteJanji',kegiatan:'deleteKegiatan'};
+  if(type==='masuk')    DATA.masuk=DATA.masuk.filter(x=>x.id!==id);
+  if(type==='keluar')   DATA.keluar=DATA.keluar.filter(x=>x.id!==id);
+  if(type==='janji')    DATA.janji_iman=DATA.janji_iman.filter((x,i)=>x.id!==id&&String(i)!==id);
+  if(type==='kegiatan') DATA.kegiatan=DATA.kegiatan.filter(x=>x.id!==id);
+  if(actionMap[type]) pushToGAS(actionMap[type],{id});
+  saveLocal();updateAll();loadJI();loadSeksi();closeConfirm();toast('🗑️ Dihapus','s');
+}
+
+// ═══ CSV EXPORT ═══
+function exportCSV(type){
+  const items=type==='masuk'?DATA.masuk:DATA.keluar;
+  const rows=type==='masuk'
+    ?[['No','Tanggal','Sumber Dana','Kategori','Metode','Bank','No.Ref','Jumlah','Keterangan']]
+    :[['No','Tanggal','Seksi','Uraian','Metode','Bank','No.Ref','Jumlah','Keterangan']];
+  items.sort((a,b)=>normTgl(a.tanggal)<normTgl(b.tanggal)?-1:1).forEach((t,i)=>rows.push([i+1,t.tanggal,type==='masuk'?(t.sumber||''):(t.seksi||''),type==='masuk'?(t.kategori||''):(t.uraian||''),t.metode==='nontunai'?'Non-Tunai':'Tunai',t.bank||'',t.noref||'',t.jumlah,t.ket||'']));
+  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download=type+'_GKPS_'+new Date().toISOString().split('T')[0]+'.csv';a.click();toast('📊 CSV diunduh!','s');
+}
+
+// ═══ TOGGLE ═══
+function setM(f,m){
+  const p=f==='masuk'?'m':'k';
+  document.getElementById(p+'-met').value=m;
+  document.getElementById(p+'-bt').className='mb '+(m==='tunai'?'at':'');
+  document.getElementById(p+'-bn').className='mb '+(m==='nontunai'?'an':'');
+  document.getElementById(p+'-ntf').classList.toggle('show',m==='nontunai');
+}
+function setJiStatus(s){
+  document.getElementById('ji-status').value=s;
+  document.getElementById('ji-bt').className='mb '+(s==='lunas-tunai'?'at':'');
+  document.getElementById('ji-bn').className='mb '+(s==='lunas-transfer'?'an':'');
+  document.getElementById('ji-bb').className='mb '+(s==='bon'?'ab':'');
+  document.getElementById('ji-ntf-bank').style.display=s==='lunas-transfer'?'block':'none';
+}
+
+// ═══ FOTO ═══
+function bukaFotoSrc(src){document.getElementById('mImg').src=src;document.getElementById('mFoto').classList.add('open');}
+function closeFoto(){document.getElementById('mFoto').classList.remove('open');}
+
+// ═══ UTILS ═══
+function rp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID');}
+function rpNum(n){return Number(n||0).toLocaleString('id-ID');}
+function prevImg(input,pid){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{const i=document.getElementById(pid);i.src=e.target.result;i.style.display='block';};r.readAsDataURL(f);}
+function toB64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>res(e.target.result);r.onerror=rej;r.readAsDataURL(f);});}
+let _t;
+function toast(msg,type=''){const el=document.getElementById('toast');el.textContent=msg;el.className='toast show '+type;clearTimeout(_t);_t=setTimeout(()=>el.classList.remove('show'),3200);}
+
+// ════ SPLASH ════
+(function(){
+  const fill = document.getElementById('splashFill');
+  let pct = 0;
+  const iv = setInterval(()=>{
+    pct = Math.min(100, pct + (pct < 70 ? 3 : pct < 90 ? 1.5 : 0.8));
+    if(fill) fill.style.width = pct + '%';
+    if(pct >= 100){
+      clearInterval(iv);
+      setTimeout(()=>{
+        const s = document.getElementById('splash');
+        if(s) s.classList.add('hide');
+        setTimeout(()=>{ if(s) s.style.display='none'; }, 500);
+      }, 200);
+    }
+  }, 30);
+})();
+
+// ════ RIPPLE ════
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('.btn, .nb, .ft-btn, .trx-act-btn');
+  if(!btn) return;
+  const r = document.createElement('span');
+  r.className = 'ripple-effect';
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+  btn.appendChild(r);
+  setTimeout(()=>r.remove(), 500);
+});
+
+// ════ ANIMATE NUMBERS ════
+function animateNumber(el, target, prefix='Rp ', duration=600){
+  const start = 0;
+  const startTime = performance.now();
+  const fn = (now)=>{
+    const p = Math.min((now-startTime)/duration, 1);
+    const ease = 1-Math.pow(1-p,3);
+    const cur = Math.round(start + (target-start)*ease);
+    el.textContent = prefix + cur.toLocaleString('id-ID');
+    if(p<1) requestAnimationFrame(fn);
+  };
+  requestAnimationFrame(fn);
+}
+
+</script>
+</body>
+</html>
