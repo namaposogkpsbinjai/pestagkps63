@@ -752,11 +752,26 @@ async function pullFromGAS(){
     const localNewJ  = DATA.janji_iman.filter(x=>x.id&&x.id.startsWith('new'));
     const localNewKg = DATA.kegiatan.filter(x=>x.id&&x.id.startsWith('new'));
 
-    if(d.masuk)    DATA.masuk    = [...(d.masuk||[]),    ...localNewM].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
-    if(d.keluar)   DATA.keluar   = [...(d.keluar||[]),   ...localNewK].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
-    if(d.janji)    DATA.janji_iman = [...(d.janji||[]).map(x=>{if(!x.cicilan)x.cicilan=[];return x;}), ...localNewJ].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
-    if(d.kegiatan) DATA.kegiatan = [...(d.kegiatan||[]), ...localNewKg].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
-    if(d.rab)      RAB_STATE     = {...d.rab, ...RAB_STATE};
+    // Hanya replace jika GAS punya data (tidak kosong) - mencegah data Excel terhapus
+    if(d.masuk && d.masuk.length>0)
+      DATA.masuk = [...(d.masuk||[]), ...localNewM].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
+    else if(localNewM.length>0)
+      DATA.masuk = [...DATA.masuk, ...localNewM].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
+
+    if(d.keluar && d.keluar.length>0)
+      DATA.keluar = [...(d.keluar||[]), ...localNewK].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
+    else if(localNewK.length>0)
+      DATA.keluar = [...DATA.keluar, ...localNewK].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
+
+    if(d.janji && d.janji.length>0)
+      DATA.janji_iman = [...(d.janji||[]).map(x=>{if(!x.cicilan)x.cicilan=[];return x;}), ...localNewJ].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
+    else if(localNewJ.length>0)
+      DATA.janji_iman = [...DATA.janji_iman, ...localNewJ].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
+
+    if(d.kegiatan && d.kegiatan.length>0)
+      DATA.kegiatan = [...(d.kegiatan||[]), ...localNewKg].filter((v,i,a)=>a.findIndex(t=>t.id===v.id)===i);
+
+    if(d.rab) RAB_STATE = {...d.rab, ...RAB_STATE};
 
     lastSync=Date.now();
     const timeStr=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
@@ -814,14 +829,49 @@ function manualSync(){
   }
 }
 
+
+// ════ FIRST TIME SYNC — Push data lokal ke GAS jika GAS masih kosong ════
+async function firstTimeSync(){
+  try {
+    const res = await fetch(CFG.GAS_URL+'?action=getAll',{cache:'no-store'});
+    const d = await res.json();
+    if(d.error) { setSyncStatus('error','Gagal sync'); return; }
+
+    const gasEmpty = (!d.masuk||d.masuk.length===0) && (!d.keluar||d.keluar.length===0);
+
+    if(gasEmpty && DATA.masuk.length>0){
+      // GAS kosong tapi lokal ada data — push semua ke GAS
+      setSyncStatus('syncing','Upload data ke Sheet...');
+      const pushAll = [
+        ...DATA.masuk.map(r=>pushToGAS('addMasuk',{record:r})),
+        ...DATA.keluar.map(r=>pushToGAS('addKeluar',{record:r})),
+        ...DATA.janji_iman.map(r=>pushToGAS('addJanji',{record:{...r,cicilan_json:JSON.stringify(r.cicilan||[])}})),
+      ];
+      await Promise.allSettled(pushAll);
+      const t=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+      setSyncStatus('','Upload '+t);
+      toast('✅ Data berhasil disimpan ke Google Sheet!','s');
+    } else {
+      // GAS sudah ada data — pull normal
+      await pullFromGAS();
+    }
+    // Lanjutkan auto sync tiap 30 detik
+    setInterval(pullFromGAS, 30000);
+  } catch(err){
+    setSyncStatus('error','Gagal sync');
+    setInterval(pullFromGAS, 30000);
+  }
+}
+
 function startAutoSync(){
   if(!CFG.GAS_URL){
     setSyncStatus('offline','Offline — isi GAS_URL');
-    // Tampilkan hint di indicator
     const ind=document.getElementById('syncInd');
     if(ind) ind.title='Klik untuk info cara mengisi GAS_URL';
     return;
   }
+  // Pertama kali: coba pull, jika GAS kosong push semua data lokal
+  firstTimeSync();
   setSyncStatus('','Menghubungkan...');
   pullFromGAS();
   // Auto pull tiap 30 detik
